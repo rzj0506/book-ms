@@ -14,10 +14,4 @@ public interface BookSortMapper {
     int updateByPrimaryKeySelective(BookSort record);
 
     int updateByPrimaryKey(BookSort record);
-    
-    
-    
-    
-    
-    
 }

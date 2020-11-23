@@ -125,4 +125,49 @@
       book_left = #{bookLeft,jdbcType=INTEGER}
     where book_id = #{bookId,jdbcType=INTEGER}
   </update>
+  <select id="selectBooksByConditions" resultMap="BaseResultMap">
+    select  book_name,book_sort,book_author,book_pub,book_num FROM book
+    <where>
+      <if test="bookSort !=null">
+        book_sort=#{bookSort}
+      </if>
+      <if test="bookPub !=null">
+        and book_pub=#{bookPub}
+      </if>
+
+    </where>
+  </select>
+  <select id="selectBooksByConditions0" resultMap="BaseResultMap">
+    select  book_name,book_sort,book_author,book_pub,book_num FROM book
+    <where>
+      <if test="bookSort !=null">
+        book_sort=#{bookSort}
+      </if>
+      <if test="bookPub !=null">
+        and book_pub=#{bookPub}
+      </if>
+      <if test="status !=null">
+        and book_num=0
+      </if>
+
+    </where>
+  </select>
+  <select id="selectBooksByConditions1" resultMap="BaseResultMap">
+    select  book_name,book_sort,book_author,book_pub,book_num FROM book
+    <where>
+      <if test="bookSort !=null">
+        book_sort=#{bookSort}
+      </if>
+      <if test="bookPub !=null">
+        and book_pub=#{bookPub}
+      </if>
+      <if test="status !=null">
+        and book_num &gt; 0
+      </if>
+
+    </where>
+  </select>
+  <select id="getBookByInput" resultMap="BaseResultMap">
+    select book_name,book_sort,book_author,book_pub,book_num FROM book WHERE book_name LIKE '%' #{keyword} '%';
+  </select>
 </mapper>

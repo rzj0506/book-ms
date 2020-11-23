@@ -14,11 +14,4 @@ public interface BorrowHistoryMapper {
     int updateByPrimaryKeySelective(BorrowHistory record);
 
     int updateByPrimaryKey(BorrowHistory record);
-    
-    
-    
-   
-
-    
-
 }

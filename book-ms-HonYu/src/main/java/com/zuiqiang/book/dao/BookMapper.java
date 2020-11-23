@@ -1,7 +1,12 @@
 package com.zuiqiang.book.dao;
 
 import com.zuiqiang.book.domain.Book;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public interface BookMapper {
     int deleteByPrimaryKey(Integer bookId);
 
@@ -14,10 +19,12 @@ public interface BookMapper {
     int updateByPrimaryKeySelective(Book record);
 
     int updateByPrimaryKey(Book record);
-   
-    
-    
-    
-   
-    
+
+    List<Book> selectBooksByConditions(@Param("bookSort") String bookSort,@Param("bookPub") String bookPub );
+
+    List<Book> selectBooksByConditions0(@Param("bookSort") String bookSort, @Param("bookPub")String bookPub,@Param("status") Integer Status);
+
+    List<Book> selectBooksByConditions1(@Param("bookSort") String bookSort,@Param("bookPub") String bookPub,@Param("status") Integer status);
+
+    List<Book> getBookByInput(String keyword);
 }
