@@ -141,7 +141,7 @@ public interface ManagerMapper {
 	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null "
 	    		+ "and  (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
 	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
-	    		+ "and (isreturn=#{isreturn} or #{isreturn} is  null) order by book_record desc")
+	    		+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) order by book_record desc")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
@@ -159,7 +159,7 @@ public interface ManagerMapper {
 	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and "
 	    		+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
 	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
-	    		+ "and (isreturn=#{isreturn} or #{isreturn} is  null) order by book_record")
+	    		+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) order by book_record")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
@@ -198,17 +198,21 @@ public interface ManagerMapper {
 	    	 })
 		List<BookSort> findAllBookSort();
 	    
-	    @Select("select * from borrow_history where user_id=#{userId}")
+	    @Select("select distinct book.book_id, book.book_name,book.book_sort,book.book_author,\r\n" + 
+	    		"borrow_history.return_date,borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n" + 
+	    		"join book on book.book_id=borrow_history.book_id where book.book_id is not null"
+	    		+ " and user_id=#{keyword}")
 	    @Results(value = { 
-	    		@Result(column = "user_id", property = "userId"), 
-	    		@Result(column = "book_id", property = "bookId"),
-	    		@Result(column = "borrow_date", property = "borrowDate"),
+	    		@Result(column = "book_id", property = "bookId"), 
+	    		@Result(column = "book_name", property = "bookName"),
+	    		@Result(column = "book_author", property = "bookAuthor"),
+	    	
+	    		@Result(column = "book_sort", property = "bookSort"), 
 	    		@Result(column = "return_date", property = "returnDate"), 
-	    		@Result(column = "isreturn", property = "isreturn"), 
-	    		@Result(column = "history_id", property = "historyId"),
+	    		@Result(column = "borrow_date", property = "borrowDate"), 
 	    		@Result(column = "validity_date", property = "validityDate"), 
-	    	 })
-	    public List<BorrowHistory> getHistoryById(Integer userId);
+	    }) 
+	    public List<Book> getHistoryById(Integer userId);
 
 	    @Select("select * from borrow_history")
 	    @Results(value = { 

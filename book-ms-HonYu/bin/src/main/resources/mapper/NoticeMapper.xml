@@ -14,7 +14,7 @@
     select 
     <include refid="Base_Column_List" />
     from notice
-    where notice_id = #{noticeId,jdbcType=INTEGER}
+    ORDER BY notice_createtime DESC limit 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from notice

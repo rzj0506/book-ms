@@ -22,9 +22,39 @@ public class Book {
     private Integer bookLeft;
 
     private Integer isreturn;
+    @JSONField(format = "yyyy-MM-dd")
+    private Date borrowDate;
+    @JSONField(format = "yyyy-MM-dd")
+    private Date returnDate; 
+    private Integer validityDate;
+  
     
     
-    public Integer getIsreturn() {
+    public Date getBorrowDate() {
+		return borrowDate;
+	}
+
+	public void setBorrowDate(Date borrowDate) {
+		this.borrowDate = borrowDate;
+	}
+
+	public Date getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
+	}
+
+	public Integer getValidityDate() {
+		return validityDate;
+	}
+
+	public void setValidityDate(Integer validityDate) {
+		this.validityDate = validityDate;
+	}
+
+	public Integer getIsreturn() {
 		return isreturn;
 	}
 
@@ -100,7 +130,10 @@ public class Book {
 	public String toString() {
 		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", bookPub="
 				+ bookPub + ", bookNum=" + bookNum + ", bookSort=" + bookSort + ", bookRecord=" + bookRecord
-				+ ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + "]";
+				+ ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + ", borrowDate=" + borrowDate + ", returnDate="
+				+ returnDate + ", validityDate=" + validityDate + "]";
 	}
+
+
     
 }

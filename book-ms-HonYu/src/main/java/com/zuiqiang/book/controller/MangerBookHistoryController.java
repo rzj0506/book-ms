@@ -91,7 +91,7 @@ public class MangerBookHistoryController {
 	@ResponseBody
 	@RequestMapping(value = "/SelectUserHistoryById",method = RequestMethod.POST)
 	public String searchDeptById(User user,Integer page, Integer rows) {
-		List<BorrowHistory> list=ManagerMapperservice.getHistoryById(user.getUserId());
+		List<Book> list=ManagerMapperservice.getHistoryById(user.getUserId());
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
 		String jsonlist = JSON.toJSONString(list);
