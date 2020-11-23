@@ -136,8 +136,10 @@ public interface ManagerMapper {
 		List<Book> selectBookByChioseDescRecord(Book book);
 
 		
-	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,book.book_sort,book.book_record,isreturn from book,borrow_history where "
-	    		+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book.book_id=borrow_history.book_id)"
+	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
+	    		"book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null "
+	    		+ "and  (book_pub=#{bookPub} or #{bookPub} is null)"
 	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
 	    		+ "and (isreturn=#{isreturn} or #{isreturn} is  null) order by book_record desc")
 	    @Results(value = { 
@@ -152,8 +154,10 @@ public interface ManagerMapper {
 	    		@Result(column = "isreturn", property = "isreturn"), 
 	    }) 
 		List<Book> selectBookHistoryByChioseDescRecord(Book book);
-	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,book.book_sort,book.book_record,isreturn from book,borrow_history where "
-	    		+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book.book_id=borrow_history.book_id)"
+	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
+	    		"book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and "
+	    		+ " (book_pub=#{bookPub} or #{bookPub} is null)"
 	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
 	    		+ "and (isreturn=#{isreturn} or #{isreturn} is  null) order by book_record")
 	    @Results(value = { 
@@ -170,9 +174,9 @@ public interface ManagerMapper {
 		List<Book> selectBookHistoryByChioseOrderRecord(Book book);
 
 		
-	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,"
-	    		+ "book.book_sort,book.book_record,isreturn from book,borrow_history where book.book_id="
-	    		+ "borrow_history.book_id and book.book_name like CONCAT('%',#{bookName},'%')")
+	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
+	    		"book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and book.book_name like CONCAT('%',#{bookName},'%')")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),

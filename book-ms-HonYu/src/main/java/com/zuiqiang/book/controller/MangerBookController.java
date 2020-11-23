@@ -168,6 +168,7 @@ public class MangerBookController {
 	 * 模糊查询所有图书并分页
 	 * @throws IOException 
 	 */
+	
 	@ResponseBody
 	@RequestMapping(value = "/SearchBookByLike",method = RequestMethod.POST)
 	public String searchBookByLike(String bookName,Integer page, Integer rows) throws IOException {
