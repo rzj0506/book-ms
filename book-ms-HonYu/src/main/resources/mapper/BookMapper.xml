@@ -168,6 +168,6 @@
     </where>
   </select>
   <select id="getBookByInput" resultMap="BaseResultMap">
-    select book_name,book_sort,book_author,book_pub,book_num FROM book WHERE book_name LIKE '%' #{keyword} '%';
+    select book_name,book_sort,book_author,book_pub,book_num FROM book WHERE book_name LIKE '%' #{keyword} '%'
   </select>
 </mapper>

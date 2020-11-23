@@ -1,10 +1,14 @@
 package com.zuiqiang.book.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zuiqiang.base_controller.BaseController;
 import com.zuiqiang.book.domain.Book;
 import com.zuiqiang.book.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,20 +48,20 @@ public class Library extends BaseController {
 
     /**模糊查询
      * @param keyword 通过关键字查询书籍
+     * @param page 第几页
+     * @param rows  每页有几行
      * @return 查询到的书籍信息{book_name,book_sort,book_author,book_pub,book_num}
      */
-    @GetMapping("/getBookByInput/{keyword}")
+    @GetMapping("/getBookByInput")
     @ResponseBody
-    public List<Book>  getBookByInput(@PathVariable("keyword") String keyword){
+    public List<Book>  getBookByInput(String keyword, Integer page, Integer rows,Model model){
+        PageHelper.startPage(page,rows);
         List<Book> books =libraryService.getBookByInput(keyword);
+        PageInfo<Book> bookPageInfo = new PageInfo<>(books);
+        long total = bookPageInfo.getTotal();
+        model.addAttribute("total",total);
         return books;
     }
-    @RequestMapping("/test/{status}")
-    public void test(@PathVariable("status") Integer status){
-        if(status==null){
-            System.out.println("woshinull");
-        }
-        System.out.println(status);
-    }
+
 
 }

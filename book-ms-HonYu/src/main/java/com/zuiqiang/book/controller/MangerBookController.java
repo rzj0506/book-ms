@@ -175,6 +175,7 @@ public class MangerBookController {
 		List<Book> list = ManagerMapperservice.findBookByLike(bookName);
 	
 		PageInfo info = new PageInfo<>(list);
+
 		long total = info.getTotal();
 		String jsonlist = JSON.toJSONString(list);
 		String json = "{\"total\":" + total +",\"data\":" + jsonlist +"}";
