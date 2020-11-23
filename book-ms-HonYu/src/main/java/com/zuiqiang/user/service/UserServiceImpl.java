@@ -1,5 +1,6 @@
 package com.zuiqiang.user.service;
 
+import com.zuiqiang.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

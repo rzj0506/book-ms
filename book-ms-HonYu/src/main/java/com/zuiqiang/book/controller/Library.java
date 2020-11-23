@@ -30,9 +30,9 @@ public class Library extends BaseController {
     }
 
     /**根据条件筛选书籍
-     * @param bookSort
-     * @param bookPub
-     * @param status status有三个状态，分别为未赋值，0,1；当未赋值时查询所有，当0时，查询借完的书籍，当1时，查询可借的书籍
+     * @param bookSort 类型 ，不赋值则查询所有
+     * @param bookPub 出版社，不赋值则查询所有
+     * @param status status有三个状态，分别为-1，0,1；当-1时查询所有，当0时，查询借完的书籍，当1时，查询可借的书籍
      * @return 筛选的书籍的信息{book_name,book_sort,book_author,book_pub,book_num}
      */
     @GetMapping("/getBookByConditions")
@@ -51,6 +51,13 @@ public class Library extends BaseController {
     public List<Book>  getBookByInput(@PathVariable("keyword") String keyword){
         List<Book> books =libraryService.getBookByInput(keyword);
         return books;
+    }
+    @RequestMapping("/test/{status}")
+    public void test(@PathVariable("status") Integer status){
+        if(status==null){
+            System.out.println("woshinull");
+        }
+        System.out.println(status);
     }
 
 }

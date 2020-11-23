@@ -30,8 +30,11 @@ public class LibraryServiceImpl implements LibraryService {
             return bookMapper.selectBooksByConditions0(bookSort,bookPub,status);
         }else if (status==1){//当1时，查询可借的书籍
             return bookMapper.selectBooksByConditions1(bookSort,bookPub,status);
-        }else return bookMapper.selectBooksByConditions(bookSort,bookPub);//当未赋值时查询所有书籍
-        
+        }else{
+            return bookMapper.selectBooksByConditions(bookSort,bookPub);//当-1时查询所有书籍
+        }
+
+
     }
 
     @Override
