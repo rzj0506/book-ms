@@ -2,6 +2,8 @@ package com.zuiqiang.book.domain;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class Book {
     private Integer bookId;
 
@@ -14,7 +16,7 @@ public class Book {
     private Integer bookNum;
 
     private String bookSort;
-
+    @JSONField(format = "yyyy-MM-dd")
     private Date bookRecord;
 
     private Integer bookLeft;

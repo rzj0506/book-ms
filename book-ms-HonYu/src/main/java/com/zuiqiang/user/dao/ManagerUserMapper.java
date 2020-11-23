@@ -13,16 +13,17 @@ import com.zuiqiang.user.domain.User;
 public interface ManagerUserMapper {
 	int updatePasswordByPrimaryKey(User record);
 	@Select("select * from user")
-    @Results(value = { 
-    		@Result(column = "user_id", property = "userId"), 
-    		@Result(column = "buser_age", property = "userAge"),
-    		@Result(column = "user_email", property = "userEmail"),
-    		@Result(column = "user_sex", property = "userSex"), 
-    		@Result(column = "user_name", property = "userName"), 
-    		@Result(column = "book_sort", property = "bookSort"), 
-    		@Result(column = "user_password", property = "userPassword"), 
-    		@Result(column = "user_category", property = "userCategory"), 
-    })
+	   @Results(value = { 
+	    		@Result(column = "user_id", property = "userId"), 
+	    		@Result(column = "user_age", property = "userAge"),
+	    		@Result(column = "user_email", property = "userEmail"),
+	    		@Result(column = "user_sex", property = "userSex"), 
+	    		@Result(column = "user_name", property = "userName"), 
+	    		@Result(column = "book_sort", property = "bookSort"), 
+	    		@Result(column = "user_phone", property = "userPhone"), 
+	    		@Result(column = "user_password", property = "userPassword"), 
+	    		@Result(column = "user_category", property = "userCategory"), 
+	    })
     ArrayList<User> count();
 	
 	 @Options(useGeneratedKeys = true,keyProperty = "id")
@@ -34,6 +35,7 @@ public interface ManagerUserMapper {
 	    		@Result(column = "user_sex", property = "userSex"), 
 	    		@Result(column = "user_name", property = "userName"), 
 	    		@Result(column = "book_sort", property = "bookSort"), 
+	    		@Result(column = "user_phone", property = "userPhone"), 
 	    		@Result(column = "user_password", property = "userPassword"), 
 	    		@Result(column = "user_category", property = "userCategory"), 
 	    })

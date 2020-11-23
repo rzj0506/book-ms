@@ -1,5 +1,6 @@
 package com.zuiqiang.notice.controller;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
@@ -185,4 +187,29 @@ public class NoticeController {
 	public int deleteNotice(@RequestParam("noticeId") Integer noticeId) {
 		return noticeservice.deleteByPrimaryKey(noticeId);
 	}
+
+	/**
+	 * 查询公告分页
+	 * 
+	 * @throws IOException
+	 */
+
+	@RequestMapping(value = "/noticeshow", method = RequestMethod.GET)
+	@ResponseBody
+	public String noticeshow(Notice notice, Integer page, Integer rows) throws IOException {
+		return noticeservice.showNoticesAll();
+	}
+
+	/**
+	 * 查询公告 之 模糊查询
+	 * 
+	 * @throws IOException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/findNoticeByLike", method = RequestMethod.POST)
+	public String findNoticeByLike(String noticeContent, Integer page, Integer rows) {
+		return noticeservice.findNoticeByLike(noticeContent, page, rows);
+
+	}
+
 }

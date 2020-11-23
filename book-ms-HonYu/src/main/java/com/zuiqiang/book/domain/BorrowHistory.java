@@ -1,7 +1,8 @@
 package com.zuiqiang.book.domain;
 
 import java.util.Date;
-import java.util.List;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 public class BorrowHistory {
     private Integer historyId;
@@ -9,9 +10,9 @@ public class BorrowHistory {
     private Integer userId;
 
     private Integer bookId;
-
+    @JSONField(format = "yyyy-MM-dd")
     private Date borrowDate;
-
+    @JSONField(format = "yyyy-MM-dd")
     private Date returnDate;
 
     private Integer isreturn;
