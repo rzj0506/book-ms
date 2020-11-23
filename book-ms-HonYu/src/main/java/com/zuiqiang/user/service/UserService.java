@@ -21,4 +21,6 @@ public interface UserService {
 	int updateByPrimaryKey(User record);
 
 	int updatePasswordByPrimaryKey(User record);
+	
+	int updatePasswordByUserId(User record);
 }

@@ -61,6 +61,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updatePasswordByPrimaryKey(User record) {
 		// TODO Auto-generated method stub
-		return ManagerUserMapperservice.updatePasswordByPrimaryKey(record);
+		return mapper.updatePasswordByUserId(record);
 	}
+
+	@Override
+	public int updatePasswordByUserId(User record) {
+		// TODO Auto-generated method stub
+		return mapper.updatePasswordByUserId(record);
+	}
+	
+	
+	
+	
 }

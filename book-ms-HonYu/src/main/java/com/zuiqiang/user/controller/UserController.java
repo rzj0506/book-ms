@@ -87,12 +87,12 @@ public class UserController {
 	@ResponseBody
 	public String searchById(HttpServletRequest request, Integer userId) {
 		System.out.println("sessionId" + request.getHeader("sessionId"));
-
-		if (request.getHeader("sessionId") == null)
-			return null;
-		// 创建session对象
+		//判断登录
 		HttpSession session = request.getSession();
 		String sessionId = request.getHeader("sessionId");
+		if (session.getAttribute(sessionId) == null) {
+			return null;
+		}
 
 		System.out.println("sessionId 获取" + session.getAttribute(sessionId));
 		User user = service.selectById(userId);
@@ -108,8 +108,14 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/update/user", method = RequestMethod.POST)
-	public String updateUser(User user) {
+	public String updateUser(User user,HttpServletRequest request) {
 		System.out.println(user.toString());
+		//判断登录
+		HttpSession session = request.getSession();
+		String sessionId = request.getHeader("sessionId");
+		if (session.getAttribute(sessionId) == null) {
+			return null;
+		}
 		int in = service.updateByPrimaryKeySelective(user);
 		User users = service.selectByPrimaryKey(user.getUserId());
 		if (in > 0) {
@@ -119,24 +125,25 @@ public class UserController {
 		return null;
 	}
 
-	/**
-	 * 删除一个user
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/delete/user", method = RequestMethod.DELETE)
-	public String deleteUser(User user) {
-		user = service.selectByPrimaryKey(user.getUserId());
-		String json = JSON.toJSONString(user);
-		System.out.println(user);
-		if (user.getUserCategory() == 1) {
-			int in = service.deleteByPrimaryKey(user.getUserId());
-			if (in > 0) {
-				return json;
-			}
-		}
-
-		return null;
-	}
+//	/**
+//	 * 管理员页面完成
+//	 * 删除一个user
+//	 */
+//	@ResponseBody
+//	@RequestMapping(value = "/delete/user", method = RequestMethod.DELETE)
+//	public String deleteUser(User user) {
+//		user = service.selectByPrimaryKey(user.getUserId());
+//		String json = JSON.toJSONString(user);
+//		System.out.println(user);
+//		if (user.getUserCategory() == 1) {
+//			int in = service.deleteByPrimaryKey(user.getUserId());
+//			if (in > 0) {
+//				return json;
+//			}
+//		}
+//
+//		return null;
+//	}
 
 	/**
 	 * 修改密码
@@ -146,11 +153,14 @@ public class UserController {
 	public String updateUserPassword(Integer userId, String userPassword, String newPassword,
 			HttpServletRequest request) {
 //		System.out.println("userPassword" + userPassword);
-		if (request.getHeader("sessionId") == null)
+		//判断登录
+		HttpSession session = request.getSession();
+		String sessionId = request.getHeader("sessionId");
+		if (session.getAttribute(sessionId) == null) {
 			return null;
+		}
 		User user = service.selectByPrimaryKey(userId);
-		System.out.println(user);
-		System.out.println("userPassword" + MD5.stringMD5(userPassword));
+
 		if (user.getUserPassword().equals(MD5.stringMD5(userPassword))) {
 //			System.out.println("userPassword2" + userPassword);
 			user.setUserPassword(MD5.stringMD5(newPassword));
