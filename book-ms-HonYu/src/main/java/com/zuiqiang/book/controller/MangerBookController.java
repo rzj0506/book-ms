@@ -316,7 +316,7 @@ public class MangerBookController {
 		return null;
 	}
 	/**
-	 * 模糊历史查询
+	 * 模糊查询
 	 * @throws IOException 
 	 */
 	@ResponseBody
