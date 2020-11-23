@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import com.zuiqiang.book.domain.Book;
 import com.zuiqiang.book.domain.BookSort;
 import com.zuiqiang.book.domain.BorrowHistory;
+import com.zuiqiang.user.domain.User;
 
 public interface ManagerMapper {
 
@@ -198,21 +199,22 @@ public interface ManagerMapper {
 	    	 })
 		List<BookSort> findAllBookSort();
 	    
-	    @Select("select distinct book.book_id, book.book_name,book.book_sort,book.book_author,\r\n" + 
+	    @Select("select  book.book_id, book.book_name,book.book_sort,book.book_author,\r\n" + 
 	    		"borrow_history.return_date,borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n" + 
 	    		"join book on book.book_id=borrow_history.book_id where book.book_id is not null"
-	    		+ " and user_id=#{keyword}")
+	    		+ " and user_id=#{userId} and book_name like CONCAT('%',#{bookName},'%')")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
 	    		@Result(column = "book_author", property = "bookAuthor"),
 	    	
+	    		
 	    		@Result(column = "book_sort", property = "bookSort"), 
 	    		@Result(column = "return_date", property = "returnDate"), 
 	    		@Result(column = "borrow_date", property = "borrowDate"), 
 	    		@Result(column = "validity_date", property = "validityDate"), 
 	    }) 
-	    public List<Book> getHistoryById(Integer userId);
+	    public List<Book> getHistoryByIdLikeName(Integer userId ,String bookName);
 
 	    @Select("select * from borrow_history")
 	    @Results(value = { 
@@ -257,4 +259,25 @@ public interface ManagerMapper {
 	    @Insert("insert into borrow_history(user_id,book_id,borrow_date,validity_date) " +
 	    	       "values(#{userId},#{bookId},#{borrowDate},#{validityDate})")
 		int inserta(BorrowHistory borrowHistory);
+
+		
+	    
+	    @Select("select  book.book_id, book.book_name,book.book_sort,book.book_author,\r\n" + 
+	    		"borrow_history.return_date,borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n" + 
+	    		"join book on book.book_id=borrow_history.book_id where book.book_id is not null"
+	    		+ " and user_id=#{userId}")
+	    @Results(value = { 
+	    		@Result(column = "book_id", property = "bookId"), 
+	    		@Result(column = "book_name", property = "bookName"),
+	    		@Result(column = "book_author", property = "bookAuthor"),
+	    	
+	    		
+	    		@Result(column = "book_sort", property = "bookSort"), 
+	    		@Result(column = "return_date", property = "returnDate"), 
+	    		@Result(column = "borrow_date", property = "borrowDate"), 
+	    		@Result(column = "validity_date", property = "validityDate"), 
+	    }) 
+	    List<Book> getHistoryById(Integer userId);
+
+		
 }

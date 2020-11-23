@@ -88,10 +88,27 @@ public class MangerBookHistoryController {
 	/**
 	 * 根据id查某个user借阅历史
 	 */
+	/**
+	 * 根据id查某个user借阅历史
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/SelectUserHistoryById",method = RequestMethod.POST)
 	public String searchDeptById(User user,Integer page, Integer rows) {
 		List<Book> list=ManagerMapperservice.getHistoryById(user.getUserId());
+		PageInfo info = new PageInfo<>(list);
+		long total = info.getTotal();
+		String jsonlist = JSON.toJSONString(list);
+		String json = "{\"total\":" + total +",\"data\":" + jsonlist +"}";
+		if(list.size() != 0) {
+			return json;
+		} 
+		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/SelectUserHistoryByIdLikeName",method = RequestMethod.POST)
+	public String searchDeptByIdLikeName(Integer userId,String bookName,Integer page, Integer rows) {
+		List<Book> list=ManagerMapperservice.getHistoryByIdLikeName(userId,bookName);
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
 		String jsonlist = JSON.toJSONString(list);
