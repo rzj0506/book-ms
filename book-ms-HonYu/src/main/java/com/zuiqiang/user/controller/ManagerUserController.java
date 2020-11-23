@@ -79,7 +79,7 @@ public class ManagerUserController {
 	@ResponseBody
 	@RequestMapping(value = "/GetUserById",method = RequestMethod.GET)
 	public String searchDeptById(User user) {
-		user = service.selectByPrimaryKey(user.getUserId());
+		user = service.selectById(user.getUserId());
 		if(user != null) {
 			String jsonlist = JSON.toJSONString(user);
 			return jsonlist;
