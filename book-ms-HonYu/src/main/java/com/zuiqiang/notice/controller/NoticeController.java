@@ -29,7 +29,7 @@ import com.zuiqiang.notice.service.Noticeservice;
  */
 
 @Controller
-@RequestMapping("/admin/notice")
+@RequestMapping("/admin/notice") // 公告的前缀地址字段
 public class NoticeController {
 	@Autowired
 	private Noticeservice noticeservice;
@@ -177,7 +177,7 @@ public class NoticeController {
 	}
 
 	/**
-	 * 刪除
+	 * 刪除公告
 	 * 
 	 * @param noticeId
 	 * @return int
@@ -191,6 +191,8 @@ public class NoticeController {
 	/**
 	 * 查询公告分页
 	 * 
+	 * 测试的url http://localhost:8081/admin/notice/noticeshow
+	 * 
 	 * @throws IOException
 	 */
 
@@ -202,6 +204,9 @@ public class NoticeController {
 
 	/**
 	 * 查询公告 之 模糊查询
+	 * 
+	 * 测试的url
+	 * http://localhost:8081/admin/notice/findNoticeByLike?noticeContent=ca&page=2&rows=1
 	 * 
 	 * @throws IOException
 	 */

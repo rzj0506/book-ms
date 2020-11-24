@@ -56,10 +56,12 @@ public class Noticeservicelmp implements Noticeservice {
 	}
 
 	@Override
-	public String showNoticesAll() {
+	public String showNoticesAll() { // 列出所有公告的内容
+		// 测试的url
+		// http://localhost:8081/admin/notice/noticeshow
+
 		// TODO Auto-generated method stub
 		List<Notice> noticeslist = noticemapper.showNoticesAll();
-
 		PageInfo info = new PageInfo<>(noticeslist);
 		long total = info.getTotal();
 		String jsonlist = JSON.toJSONString(noticeslist);
@@ -82,9 +84,10 @@ public class Noticeservicelmp implements Noticeservice {
 //		return null;
 //	}
 
-	@Override
+	@Override // 公告的模糊查询功能，分页展示
 	public String findNoticeByLike(String noticeContent, Integer page, Integer rows) {
 
+		// 测试的url
 		// http://localhost:8081/admin/notice/findNoticeByLike?noticeContent=ca&page=2&rows=1
 
 		PageHelper.startPage(page, rows);

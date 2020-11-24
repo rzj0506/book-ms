@@ -21,6 +21,8 @@ public interface NoticeMapper {
 
 	int updateByPrimaryKey(Notice record);
 
+	// 下面的为使用注解开发
+
 	@Select("select user.user_name,notice.notice_createtime,notice.notice_content from notice left join user on  notice.notice_id = user.user_id") // 公告展示
 	@Results(value = { @Result(column = "notice_id", property = "noticeId"),
 			@Result(column = "notice_content", property = "noticeContent"),
