@@ -28,9 +28,27 @@ public class Book {
     private Date returnDate; 
     private Integer validityDate;
   
+    private String book_img;
+    private String book_introduce;
     
     
-    public Date getBorrowDate() {
+    public String getBook_img() {
+		return book_img;
+	}
+
+	public void setBook_img(String book_img) {
+		this.book_img = book_img;
+	}
+
+	public String getBook_introduce() {
+		return book_introduce;
+	}
+
+	public void setBook_introduce(String book_introduce) {
+		this.book_introduce = book_introduce;
+	}
+
+	public Date getBorrowDate() {
 		return borrowDate;
 	}
 
@@ -131,8 +149,11 @@ public class Book {
 		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", bookPub="
 				+ bookPub + ", bookNum=" + bookNum + ", bookSort=" + bookSort + ", bookRecord=" + bookRecord
 				+ ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + ", borrowDate=" + borrowDate + ", returnDate="
-				+ returnDate + ", validityDate=" + validityDate + "]";
+				+ returnDate + ", validityDate=" + validityDate + ", book_img=" + book_img + ", book_introduce="
+				+ book_introduce + "]";
 	}
+
+	
 
 
     
