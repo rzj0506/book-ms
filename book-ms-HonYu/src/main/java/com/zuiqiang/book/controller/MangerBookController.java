@@ -2,6 +2,7 @@ package com.zuiqiang.book.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,10 +53,9 @@ public class MangerBookController {
 		int num = ManagerMapperservice.getUserBookNum(user.getUserId());
 		String json = JSON.toJSONString(num);
 		
-		if(num<=3) {
+		
 			return json;
-		}
-		return null;
+		
 	}
 	
 	/**
@@ -107,10 +107,37 @@ public class MangerBookController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/UpdateBook",method = RequestMethod.POST)
-	public String managerChangeSort(Book book) {
+	public String managerChangeSort(Integer bookId,String bookName,String bookAuthor,String bookPub,String bookSort,String bookRecord) {
+		
+		Date date=null;
+		Book book=new Book();
+		if(bookRecord!=null) {
+		DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			date = fmt.parse(bookRecord);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		if(bookId!=null)
+			book.setBookId(bookId);
+		if(bookName!=null)
+		book.setBookName(bookName);
+		if(bookAuthor!=null)
+		book.setBookAuthor(bookAuthor);
+		if(bookPub!=null)
+		book.setBookPub(bookPub);
+		if(bookSort!=null)
+		book.setBookSort(bookSort);
+		if(date!=null)
+		book.setBookRecord(date);
 		
 		String json = JSON.toJSONString(book);
 		int in = BookMapperservice.updateByPrimaryKeySelective(book);
+		
+		
 		if(in>0) {
 			return json;
 		}
