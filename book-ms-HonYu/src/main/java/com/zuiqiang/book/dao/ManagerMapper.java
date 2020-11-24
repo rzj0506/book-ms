@@ -140,13 +140,13 @@ public interface ManagerMapper {
 		List<Book> selectBookByChioseDescRecord(Book book);
 
 		
-	    @Select("select book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
+	    @Select("select * from (select book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
 	    		"book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
 	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null "
 	    		+ "and  (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
 	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
-	    		+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) group by "
-	    		+ " book.book_id order by book_record desc,isreturn desc")
+	    		+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) order by isreturn) as t group by "
+	    		+ " t.book_id order by book_record")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
@@ -159,13 +159,13 @@ public interface ManagerMapper {
 	    		@Result(column = "isreturn", property = "isreturn"), 
 	    }) 
 		List<Book> selectBookHistoryByChioseDescRecord(Book book);
-	    @Select("select  book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
-	    		"book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book  LEFT OUTER \r\n" + 
-	    		"join borrow_history  on book.book_id=borrow_history.book_id where book.book_id is not null and "
-	    		+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
+	    @Select("select * from (select book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
+	    		"book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null "
+	    		+ "and  (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
 	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
-	    		+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null)  group by book.book_id "
-	    		+ " order by book_record,isreturn desc")
+	    		+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) order by isreturn) as t group by "
+	    		+ " t.book_id order by book_record desc")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
