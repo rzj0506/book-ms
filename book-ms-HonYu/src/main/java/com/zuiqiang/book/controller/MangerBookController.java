@@ -1,5 +1,6 @@
 package com.zuiqiang.book.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,9 +49,8 @@ public class MangerBookController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/SaveBook",method = RequestMethod.POST)
-	public String addBook(Book book) {
-		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
+	public String addBook(Book book,File file) {
+		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {
 			date = df.parse(df.format(new Date()));
@@ -58,8 +58,13 @@ public class MangerBookController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		book.setBookRecord(date);
+		
+		
+
+		
+		
+		
 		int in = BookMapperservice.insert(book);
 		if(in > 0) {
 			
@@ -298,7 +303,7 @@ public class MangerBookController {
 		return null;
 	}
 	/**
-	 * 筛选历史查询 按时间小排序
+	 * 筛选书本+isreturn查询 按时间小排序
 	 * @throws IOException 
 	 */
 	@ResponseBody

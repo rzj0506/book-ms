@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zuiqiang.book.dao.BookMapper;
 import com.zuiqiang.book.dao.BorrowHistoryMapper;
@@ -42,7 +43,7 @@ public class MangerBookHistoryController {
 		
 		
 		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	
+		borrowHistory.setIsreturn(0);
 		Date date = null;
 		try {
 			date = df.parse(df.format(new Date()));
@@ -94,6 +95,7 @@ public class MangerBookHistoryController {
 	@ResponseBody
 	@RequestMapping(value = "/SelectUserHistoryById",method = RequestMethod.POST)
 	public String searchDeptById(User user,Integer page, Integer rows) {
+		PageHelper.startPage(page,rows);
 		List<Book> list=ManagerMapperservice.getHistoryById(user.getUserId());
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
@@ -108,6 +110,7 @@ public class MangerBookHistoryController {
 	@ResponseBody
 	@RequestMapping(value = "/SelectUserHistoryByIdLikeName",method = RequestMethod.POST)
 	public String searchDeptByIdLikeName(Integer userId,String bookName,Integer page, Integer rows) {
+		PageHelper.startPage(page,rows);
 		List<Book> list=ManagerMapperservice.getHistoryByIdLikeName(userId,bookName);
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
@@ -124,6 +127,7 @@ public class MangerBookHistoryController {
 	@ResponseBody
 	@RequestMapping(value = "/SelectHistoryAll",method = RequestMethod.POST)
 	public String findHistoryAll(Book book,Integer page, Integer rows) {
+		PageHelper.startPage(page,rows);
 		List<Book> list=ManagerMapperservice.getHistoryAll(book);
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
@@ -140,6 +144,7 @@ public class MangerBookHistoryController {
 	@ResponseBody
 	@RequestMapping(value = "/SelectHistoryAllDesc",method = RequestMethod.POST)
 	public String findHistoryAllDesc(Book book,Integer page, Integer rows) {
+		PageHelper.startPage(page,rows);
 		List<Book> list=ManagerMapperservice.getHistoryAllDesc(book);
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
@@ -156,6 +161,7 @@ public class MangerBookHistoryController {
 	@ResponseBody
 	@RequestMapping(value = "/SelectHistoryAllByLike",method = RequestMethod.POST)
 	public String findHistoryAllByLike(Book book,Integer page, Integer rows) {
+		PageHelper.startPage(page,rows);
 		List<Book> list=ManagerMapperservice.getHistoryAllByLike(book);
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
@@ -173,6 +179,7 @@ public class MangerBookHistoryController {
 	@ResponseBody
 	@RequestMapping(value = "/SelectHistoryByLikeT",method = RequestMethod.POST)
 	public String findHistoryByLike(String bookname,Integer page, Integer rows) {
+		PageHelper.startPage(page,rows);
 		Book book = ManagerMapperservice.findBookByLikelimit1(bookname);
 		List<BorrowHistory> list=ManagerMapperservice.getHistoryByBookId(book.getBookId());
 		PageInfo info = new PageInfo<>(list);
