@@ -61,10 +61,10 @@ public class Noticeservicelmp implements Noticeservice {
 		// http://localhost:8081/admin/notice/noticeshow
 
 		// TODO Auto-generated method stub
-	
+		int num =noticemapper.GetNoticeNum();
 		List<Notice> noticeslist = noticemapper.showNoticesAll((page-1)*rows, rows);
 		PageInfo info = new PageInfo<>(noticeslist);
-		long total = info.getTotal();
+		long total = num;
 		String jsonlist = JSON.toJSONString(noticeslist);
 		String json = "{\"total\":" + total + ",\"data\":" + jsonlist + "}";
 		if (noticeslist.size() != 0) {
