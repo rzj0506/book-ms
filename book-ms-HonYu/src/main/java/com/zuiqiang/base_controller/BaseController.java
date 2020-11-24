@@ -28,7 +28,7 @@ public class BaseController {
 
         User loginUser = (User) request.getSession().getAttribute("loginUser");
 
-       
+       userId = Integer.getInteger(request.getHeader("sessionId"));
 
     }
 }
