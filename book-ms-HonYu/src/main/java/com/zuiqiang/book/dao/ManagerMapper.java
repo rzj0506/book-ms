@@ -190,7 +190,7 @@ public interface ManagerMapper {
 	    }) 
 		List<Book> selectHistoryByLike(Book book);
 	    
-	    @Select("select * from booksort")
+	    @Select("select sort_name from booksort")
 	    
 	    @Results(value = { 
 	    		@Result(column = "sort_id", property = "sortId"), 
@@ -216,7 +216,7 @@ public interface ManagerMapper {
 	    public List<Book> getHistoryByIdLikeName(Integer userId ,String bookName);
 
 	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
-	    		" book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		" validity_date, book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
 	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and "
 	    		+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
 	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
@@ -238,7 +238,7 @@ public interface ManagerMapper {
 		List<Book> getHistoryAll(Book book);
 
 	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
-	    		" book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		" validity_date,book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
 	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and "
 	    		+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
 	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
@@ -260,7 +260,7 @@ public interface ManagerMapper {
 		List<Book> getHistoryAllDesc(Book book);
 	    
 	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
-	    		" book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		" validity_date,book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
 	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and "
 	    		+ "  book_name like CONCAT('%',#{bookName},'%')")
 	    @Results(value = { 
