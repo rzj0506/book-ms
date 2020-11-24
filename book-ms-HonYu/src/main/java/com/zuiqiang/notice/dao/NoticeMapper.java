@@ -21,11 +21,11 @@ public interface NoticeMapper {
 
 	int updateByPrimaryKey(Notice record);
 
-	@Select("select * from notice") // 公告展示
+	@Select("select user.user_name,notice.notice_createtime,notice.notice_content from notice left join user on  notice.notice_id = user.user_id") // 公告展示
 	@Results(value = { @Result(column = "notice_id", property = "noticeId"),
 			@Result(column = "notice_content", property = "noticeContent"),
 			@Result(column = "notice_createtime", property = "noticeCreatetime"),
-			@Result(column = "user_id", property = "userId"), })
+			@Result(column = "user_id", property = "userId"), @Result(column = "user_name", property = "userName") })
 	List<Notice> showNoticesAll();
 
 	@Select("select * from notice where notice_content like CONCAT('%',#{noticeContent},'%')") // 公告的模糊查询

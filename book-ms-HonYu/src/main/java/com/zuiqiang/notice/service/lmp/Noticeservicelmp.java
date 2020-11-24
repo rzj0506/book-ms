@@ -59,6 +59,7 @@ public class Noticeservicelmp implements Noticeservice {
 	public String showNoticesAll() {
 		// TODO Auto-generated method stub
 		List<Notice> noticeslist = noticemapper.showNoticesAll();
+
 		PageInfo info = new PageInfo<>(noticeslist);
 		long total = info.getTotal();
 		String jsonlist = JSON.toJSONString(noticeslist);
