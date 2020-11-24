@@ -23,7 +23,7 @@ public interface NoticeMapper {
 
 	// 下面的为使用注解开发
 
-	@Select("select user.user_name,notice.notice_createtime,notice.notice_content from notice left join user on  notice.notice_id = user.user_id  LIMIT #{page}, #{rows}") // 公告展示
+	@Select("select notice_id,user.user_name,notice.notice_createtime,notice.notice_content from notice left join user on  notice.user_id = user.user_id  LIMIT #{page}, #{rows}") // 公告展示
 	
 	@Results(value = { @Result(column = "notice_id", property = "noticeId"),
 			@Result(column = "notice_content", property = "noticeContent"),
@@ -50,4 +50,7 @@ public interface NoticeMapper {
 //
 //	List<Notice> getHistoryBynoticeId(Object noticeId);
 
+	@Select("select count(*) from notice where notice_content like CONCAT('%',#{noticeContent},'%')") // 公告的模糊查询
+	
+	Integer findNoticeByLikeTotal(String noticeContent);
 }
