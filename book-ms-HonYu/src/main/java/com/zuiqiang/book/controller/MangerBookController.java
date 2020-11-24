@@ -22,6 +22,7 @@ import com.zuiqiang.book.dao.BorrowHistoryMapper;
 import com.zuiqiang.book.dao.ManagerMapper;
 import com.zuiqiang.book.domain.Book;
 import com.zuiqiang.user.dao.UserMapper;
+import com.zuiqiang.user.domain.User;
 
 @Controller
 public class MangerBookController {
@@ -42,14 +43,27 @@ public class MangerBookController {
 
 	
 	
-	
+	/**
+	 * 查询某个用户现在有几本书
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/GetUserBookNum",method = RequestMethod.GET)
+	public String getUserBookNum(User user) {
+		int num = ManagerMapperservice.getUserBookNum(user.getUserId());
+		String json = JSON.toJSONString(num);
+		
+		if(num<=3) {
+			return json;
+		}
+		return null;
+	}
 	
 	/**
 	 * 增加图书
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/SaveBook",method = RequestMethod.POST)
-	public String addBook(Book book,File file) {
+	public String addBook(Book book) {
 		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {

@@ -191,5 +191,21 @@ public class MangerBookHistoryController {
 		} 
 		return null;
 	}
-
+	/**
+	 * 查询全部借阅历史
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/SelectMyBook",method = RequestMethod.POST)
+	public String selectMyBook(User user,Integer page, Integer rows) {
+		PageHelper.startPage(page,rows);
+		List<Book> list=ManagerMapperservice.selectMyBook(user);
+		PageInfo info = new PageInfo<>(list);
+		long total = info.getTotal();
+		String jsonlist = JSON.toJSONString(list);
+		String json = "{\"total\":" + total +",\"data\":" + jsonlist +"}";
+		if(list.size() != 0) {
+			return json;
+		} 
+		return null;
+	}
 }

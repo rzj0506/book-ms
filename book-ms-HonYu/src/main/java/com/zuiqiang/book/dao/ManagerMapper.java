@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import com.zuiqiang.book.domain.Book;
 import com.zuiqiang.book.domain.BookSort;
 import com.zuiqiang.book.domain.BorrowHistory;
+import com.zuiqiang.user.domain.User;
 
 public interface ManagerMapper {
 
@@ -208,7 +209,7 @@ public interface ManagerMapper {
 	    @Select("select * from (select  book.book_id, book.book_name,book.book_sort,book.book_author,\r\n" + 
 	    		" isreturn, borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n" + 
 	    		"join book on book.book_id=borrow_history.book_id where book.book_id is not null"
-	    		+ " and user_id=#{userId} and book_name like CONCAT('%',#{bookName},'%') order by isreturn) as t group by t.book_id")
+	    		+ " and user_id=#{userId} and book_name like CONCAT('%',#{bookName},'%') order by isreturn) as t ")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
@@ -337,6 +338,31 @@ public interface ManagerMapper {
 	    		@Result(column = "validity_date", property = "validityDate"), 
 	    }) 
 	    List<Book> getHistoryById(Integer userId);
+
+	    @Select("select count(*) from borrow_history where user_id = #{userId}")
+		int getUserBookNum(Integer userId);
+
+		
+	    @Select("select borrow_history.history_id, book.book_id, book.book_name,book.book_sort,book.book_author,\r\n" + 
+	    		"borrow_history.return_date,borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n" + 
+	    		"join book on book.book_id=borrow_history.book_id where book.book_id is not null and isreturn=0"
+	    		+ " and user_id=#{userId}")
+	    @Results(value = { 
+	    		@Result(column = "book_id", property = "bookId"), 
+	    		@Result(column = "book_name", property = "bookName"),
+	    		@Result(column = "book_author", property = "bookAuthor"),
+	    		@Result(column = "book_pub", property = "bookPub"), 
+	    		@Result(column = "book_num", property = "bookNum"), 
+	    		@Result(column = "book_sort", property = "bookSort"), 
+	    		@Result(column = "book_record", property = "bookRecord"), 
+	    		@Result(column = "book_left", property = "bookLeft"), 
+	    		@Result(column = "isreturn", property = "isreturn"), 
+	    		@Result(column = "return_date", property = "returnDate"), 
+	    		@Result(column = "borrow_date", property = "borrowDate"), 
+	    		@Result(column = "validity_date", property = "validityDate"), 
+	    		@Result(column = "history_id", property = "historyId"), 
+	    }) 
+	    List<Book> selectMyBook(User user);
 
 		
 }

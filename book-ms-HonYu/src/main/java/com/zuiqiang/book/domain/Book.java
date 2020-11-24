@@ -10,7 +10,7 @@ public class Book {
     private String bookName;
 
     private String bookAuthor;
-
+    private Integer historyId;
     private String bookPub;
 
     private Integer bookNum;
@@ -32,7 +32,15 @@ public class Book {
     private String book_introduce;
     
     
-    public String getBook_img() {
+    public Integer getHistoryId() {
+		return historyId;
+	}
+
+	public void setHistoryId(Integer historyId) {
+		this.historyId = historyId;
+	}
+
+	public String getBook_img() {
 		return book_img;
 	}
 
@@ -146,12 +154,14 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", bookPub="
-				+ bookPub + ", bookNum=" + bookNum + ", bookSort=" + bookSort + ", bookRecord=" + bookRecord
-				+ ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + ", borrowDate=" + borrowDate + ", returnDate="
-				+ returnDate + ", validityDate=" + validityDate + ", book_img=" + book_img + ", book_introduce="
-				+ book_introduce + "]";
+		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", historyId="
+				+ historyId + ", bookPub=" + bookPub + ", bookNum=" + bookNum + ", bookSort=" + bookSort
+				+ ", bookRecord=" + bookRecord + ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + ", borrowDate="
+				+ borrowDate + ", returnDate=" + returnDate + ", validityDate=" + validityDate + ", book_img="
+				+ book_img + ", book_introduce=" + book_introduce + "]";
 	}
+
+
 
 	
 
