@@ -122,9 +122,9 @@ public class MangerBookHistoryController {
 	 * 查询全部借阅历史
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/SelectHistoryAll",method = RequestMethod.GET)
-	public String findHistoryAll(Integer page, Integer rows) {
-		List<BorrowHistory> list=ManagerMapperservice.getHistoryAll();
+	@RequestMapping(value = "/SelectHistoryAll",method = RequestMethod.POST)
+	public String findHistoryAll(Book book,Integer page, Integer rows) {
+		List<Book> list=ManagerMapperservice.getHistoryAll(book);
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
 		String jsonlist = JSON.toJSONString(list);
@@ -134,6 +134,39 @@ public class MangerBookHistoryController {
 		} 
 		return null;
 	}
+	/**
+	 * 查询全部借阅历史
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/SelectHistoryAllDesc",method = RequestMethod.POST)
+	public String findHistoryAllDesc(Book book,Integer page, Integer rows) {
+		List<Book> list=ManagerMapperservice.getHistoryAllDesc(book);
+		PageInfo info = new PageInfo<>(list);
+		long total = info.getTotal();
+		String jsonlist = JSON.toJSONString(list);
+		String json = "{\"total\":" + total +",\"data\":" + jsonlist +"}";
+		if(list.size() != 0) {
+			return json;
+		} 
+		return null;
+	}
+	/**
+	 * 模糊查询全部借阅历史
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/SelectHistoryAllByLike",method = RequestMethod.POST)
+	public String findHistoryAllByLike(Book book,Integer page, Integer rows) {
+		List<Book> list=ManagerMapperservice.getHistoryAllByLike(book);
+		PageInfo info = new PageInfo<>(list);
+		long total = info.getTotal();
+		String jsonlist = JSON.toJSONString(list);
+		String json = "{\"total\":" + total +",\"data\":" + jsonlist +"}";
+		if(list.size() != 0) {
+			return json;
+		} 
+		return null;
+	}
+	
 	/**
 	 * 模糊查询全部借阅历史
 	 */

@@ -11,7 +11,6 @@ import org.apache.ibatis.annotations.Select;
 import com.zuiqiang.book.domain.Book;
 import com.zuiqiang.book.domain.BookSort;
 import com.zuiqiang.book.domain.BorrowHistory;
-import com.zuiqiang.user.domain.User;
 
 public interface ManagerMapper {
 
@@ -216,18 +215,71 @@ public interface ManagerMapper {
 	    }) 
 	    public List<Book> getHistoryByIdLikeName(Integer userId ,String bookName);
 
-	    @Select("select * from borrow_history")
+	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
+	    		" book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and "
+	    		+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
+	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
+	    		+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) order by book_record")
 	    @Results(value = { 
-	    		@Result(column = "user_id", property = "userId"), 
-	    		@Result(column = "book_id", property = "bookId"),
-	    		@Result(column = "borrow_date", property = "borrowDate"),
-	    		@Result(column = "return_date", property = "returnDate"), 
+	    		@Result(column = "book_id", property = "bookId"), 
+	    		@Result(column = "book_name", property = "bookName"),
+	    		@Result(column = "book_author", property = "bookAuthor"),
+	    		@Result(column = "book_pub", property = "bookPub"), 
+	    		@Result(column = "book_num", property = "bookNum"), 
+	    		@Result(column = "book_sort", property = "bookSort"), 
+	    		@Result(column = "book_record", property = "bookRecord"), 
+	    		@Result(column = "book_left", property = "bookLeft"), 
 	    		@Result(column = "isreturn", property = "isreturn"), 
-	    		@Result(column = "history_id", property = "historyId"), 
+	    		@Result(column = "return_date", property = "returnDate"), 
+	    		@Result(column = "borrow_date", property = "borrowDate"), 
 	    		@Result(column = "validity_date", property = "validityDate"), 
-	    	 })
-		List<BorrowHistory> getHistoryAll();
+	    }) 
+		List<Book> getHistoryAll(Book book);
 
+	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
+	    		" book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and "
+	    		+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
+	    		+ "and (book_sort=#{bookSort} or #{bookSort} is  null)"
+	    		+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) order by book_record desc")
+	    @Results(value = { 
+	    		@Result(column = "book_id", property = "bookId"), 
+	    		@Result(column = "book_name", property = "bookName"),
+	    		@Result(column = "book_author", property = "bookAuthor"),
+	    		@Result(column = "book_pub", property = "bookPub"), 
+	    		@Result(column = "book_num", property = "bookNum"), 
+	    		@Result(column = "book_sort", property = "bookSort"), 
+	    		@Result(column = "book_record", property = "bookRecord"), 
+	    		@Result(column = "book_left", property = "bookLeft"), 
+	    		@Result(column = "isreturn", property = "isreturn"), 
+	    		@Result(column = "return_date", property = "returnDate"), 
+	    		@Result(column = "borrow_date", property = "borrowDate"), 
+	    		@Result(column = "validity_date", property = "validityDate"), 
+	    }) 
+		List<Book> getHistoryAllDesc(Book book);
+	    
+	    @Select("select distinct book.book_id, book.book_name,book.book_pub,book.book_author,\r\n" + 
+	    		" book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n" + 
+	    		"join borrow_history on book.book_id=borrow_history.book_id where book.book_id is not null and "
+	    		+ "  book_name like CONCAT('%',#{bookName},'%')")
+	    @Results(value = { 
+	    		@Result(column = "book_id", property = "bookId"), 
+	    		@Result(column = "book_name", property = "bookName"),
+	    		@Result(column = "book_author", property = "bookAuthor"),
+	    		@Result(column = "book_pub", property = "bookPub"), 
+	    		@Result(column = "book_num", property = "bookNum"), 
+	    		@Result(column = "book_sort", property = "bookSort"), 
+	    		@Result(column = "book_record", property = "bookRecord"), 
+	    		@Result(column = "book_left", property = "bookLeft"), 
+	    		@Result(column = "isreturn", property = "isreturn"), 
+	    		@Result(column = "return_date", property = "returnDate"), 
+	    		@Result(column = "borrow_date", property = "borrowDate"), 
+	    		@Result(column = "validity_date", property = "validityDate"), 
+	    }) 
+		List<Book> getHistoryAllByLike(Book book);
+	    
+	    
 	    @Select("select * from borrow_history where book_id CONCAT('%',#{bookid},'%')")
 	    @Results(value = { 
 	    		@Result(column = "user_id", property = "userId"), 
