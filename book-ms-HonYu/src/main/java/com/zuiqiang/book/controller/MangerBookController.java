@@ -303,7 +303,7 @@ public class MangerBookController {
 		return null;
 	}
 	/**
-	 * 筛选历史查询 按时间小排序
+	 * 筛选书本+isreturn查询 按时间小排序
 	 * @throws IOException 
 	 */
 	@ResponseBody
