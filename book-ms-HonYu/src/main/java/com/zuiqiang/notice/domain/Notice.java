@@ -2,11 +2,13 @@ package com.zuiqiang.notice.domain;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class Notice {
     private Integer noticeId;
 
     private String noticeContent;
-
+    @JSONField(format = "yyyy-MM-dd")
     private Date noticeCreatetime;
 
     private Integer userId;
