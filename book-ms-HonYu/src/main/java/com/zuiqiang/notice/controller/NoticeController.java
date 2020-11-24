@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
+import com.alibaba.fastjson.JSON;
 import com.zuiqiang.notice.domain.Notice;
 import com.zuiqiang.notice.service.Noticeservice;
 
@@ -56,9 +57,16 @@ public class NoticeController {
 	 */
 	@PostMapping(value = { "/insertall" })
 	@ResponseBody
-	public int insertNotice(Notice notice) {
+	public String insertNotice(Notice notice) {
 
-		return noticeservice.insert(notice);
+		
+		int in = noticeservice.insert(notice);
+		if(in > 0) {
+			
+			String json = JSON.toJSONString(notice);
+			return json;
+		}
+		return null;
 	}
 
 	/**
@@ -184,8 +192,8 @@ public class NoticeController {
 	 */
 	@GetMapping(value = { "delete" })
 	@ResponseBody
-	public int deleteNotice(@RequestParam("noticeId") Integer noticeId) {
-		return noticeservice.deleteByPrimaryKey(noticeId);
+	public int deleteNotice(@RequestParam("noticeId") String noticeId) {
+		return noticeservice.deleteByPrimaryKey(Integer.parseInt(noticeId));
 	}
 
 	/**
@@ -199,7 +207,7 @@ public class NoticeController {
 	@RequestMapping(value = "/noticeshow", method = RequestMethod.GET)
 	@ResponseBody
 	public String noticeshow(Notice notice, Integer page, Integer rows) throws IOException {
-		return noticeservice.showNoticesAll();
+		return noticeservice.showNoticesAll(page, rows);
 	}
 
 	/**

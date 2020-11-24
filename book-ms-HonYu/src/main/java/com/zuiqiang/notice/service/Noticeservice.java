@@ -19,7 +19,7 @@ public interface Noticeservice {
 
 	int deleteByPrimaryKey(Integer noticeId);// 刪除
 
-	String showNoticesAll();// 公告列表展示
+	String showNoticesAll(int page, int rows);// 公告列表展示
 
 //	String findNoticeAll(String noticeContent);// 查询
 

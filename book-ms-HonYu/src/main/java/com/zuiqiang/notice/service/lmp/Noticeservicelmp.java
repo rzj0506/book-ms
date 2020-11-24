@@ -56,14 +56,15 @@ public class Noticeservicelmp implements Noticeservice {
 	}
 
 	@Override
-	public String showNoticesAll() { // 列出所有公告的内容
+	public String showNoticesAll(int page, int rows) { // 列出所有公告的内容
 		// 测试的url
 		// http://localhost:8081/admin/notice/noticeshow
 
 		// TODO Auto-generated method stub
-		List<Notice> noticeslist = noticemapper.showNoticesAll();
+		int num =noticemapper.GetNoticeNum();
+		List<Notice> noticeslist = noticemapper.showNoticesAll((page-1)*rows, rows);
 		PageInfo info = new PageInfo<>(noticeslist);
-		long total = info.getTotal();
+		long total = num;
 		String jsonlist = JSON.toJSONString(noticeslist);
 		String json = "{\"total\":" + total + ",\"data\":" + jsonlist + "}";
 		if (noticeslist.size() != 0) {
@@ -90,10 +91,11 @@ public class Noticeservicelmp implements Noticeservice {
 		// 测试的url
 		// http://localhost:8081/admin/notice/findNoticeByLike?noticeContent=ca&page=2&rows=1
 
-		PageHelper.startPage(page, rows);
-		List<Notice> list = noticemapper.findNoticeByLike(noticeContent);
+//		PageHelper.startPage(page, rows);
+		int num =noticemapper.GetNoticeNum();
+		List<Notice> list = noticemapper.findNoticeByLike(noticeContent, (page - 1) * rows, rows);
 		PageInfo info = new PageInfo<>(list);
-		long total = info.getTotal();
+		long total = num;
 		String jsonlist = JSON.toJSONString(list);
 		String json = "{\"total\":" + total + ",\"data\":" + jsonlist + "}";
 		if (list.size() != 0) {
