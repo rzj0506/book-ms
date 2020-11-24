@@ -42,7 +42,7 @@ public class MangerBookHistoryController {
 		
 		
 		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	
+		borrowHistory.setIsreturn(0);
 		Date date = null;
 		try {
 			date = df.parse(df.format(new Date()));

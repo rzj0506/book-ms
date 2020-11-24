@@ -311,8 +311,8 @@ public interface ManagerMapper {
 	    	 })
 		List<BorrowHistory> getHistoryByBookId(Integer bookId);
 
-	    @Insert("insert into borrow_history(user_id,book_id,borrow_date,validity_date) " +
-	    	       "values(#{userId},#{bookId},#{borrowDate},#{validityDate})")
+	    @Insert("insert into borrow_history(user_id,book_id,borrow_date,validity_date,isreturn) " +
+	    	       "values(#{userId},#{bookId},#{borrowDate},#{validityDate},#{isreturn})")
 		int inserta(BorrowHistory borrowHistory);
 
 		
