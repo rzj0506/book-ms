@@ -21,7 +21,8 @@ public interface ManagerMapper {
 		int tofindBookLeftById(Integer bookId);
 
 	    
-	    @Select("select * from book")
+	    @Select("select book_id,book_name,book_author,book_pub,book_num,book_sort"
+	    		+ " ,book_record,book_left from book")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
@@ -33,7 +34,8 @@ public interface ManagerMapper {
 	    		@Result(column = "book_left", property = "bookLeft"), 
 	    })
 		public List<Book> findAllBook() throws IOException;
-	    @Select("select * from book where book_name like CONCAT('%',#{bookName},'%')")
+	    @Select("select book_id,book_name,book_author,book_pub"
+	    		+ ",book_num,book_sort,book_record,book_left from book where book_name like CONCAT('%',#{bookName},'%')")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
@@ -53,7 +55,8 @@ public interface ManagerMapper {
 	    		"(select borrow_history.book_id from borrow_history where borrow_history.isreturn =0)")
 		int tofindBookLeftByName(String bookName);
 	    
-	    @Select("select * from book where book_name like CONCAT('%',#{keyWord},'%') limit 0,1")
+	    @Select("select book_id,book_name,book_author,book_pub,"
+	    		+ "book_num,book_sort,book_record,book_left from book where book_name like CONCAT('%',#{keyWord},'%') limit 0,1")
 	    @Results(value = { 
 	    		@Result(column = "book_id", property = "bookId"), 
 	    		@Result(column = "book_name", property = "bookName"),
