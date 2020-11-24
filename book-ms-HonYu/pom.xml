@@ -12,6 +12,7 @@
     <artifactId>book-ms</artifactId>
     <version>1.0.0</version>
     <name>book-ms</name>
+    <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -83,6 +84,14 @@
 
     <build>
 
+  <plugins>
+  	<plugin>
+  		<groupId>org.springframework.boot</groupId>
+ 		<artifactId>spring-boot-maven-plugin</artifactId>
+  	</plugin>
+  </plugins>
+
     </build>
+    
 
 </project>

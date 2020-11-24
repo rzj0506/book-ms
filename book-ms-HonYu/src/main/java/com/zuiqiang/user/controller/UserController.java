@@ -87,14 +87,13 @@ public class UserController {
 	@ResponseBody
 	public String searchById(HttpServletRequest request, Integer userId) {
 		System.out.println("sessionId" + request.getHeader("sessionId"));
+		
 		//判断登录
-		HttpSession session = request.getSession();
 		String sessionId = request.getHeader("sessionId");
-		if (session.getAttribute(sessionId) == null) {
+		if (sessionId == null) {
 			return null;
 		}
 
-		System.out.println("sessionId 获取" + session.getAttribute(sessionId));
 		User user = service.selectById(userId);
 		if (user != null) {
 			String jsonlist = JSON.toJSONString(user);
@@ -111,9 +110,8 @@ public class UserController {
 	public String updateUser(User user,HttpServletRequest request) {
 		System.out.println(user.toString());
 		//判断登录
-		HttpSession session = request.getSession();
 		String sessionId = request.getHeader("sessionId");
-		if (session.getAttribute(sessionId) == null) {
+		if (sessionId == null) {
 			return null;
 		}
 		int in = service.updateByPrimaryKeySelective(user);
@@ -154,9 +152,8 @@ public class UserController {
 			HttpServletRequest request) {
 //		System.out.println("userPassword" + userPassword);
 		//判断登录
-		HttpSession session = request.getSession();
 		String sessionId = request.getHeader("sessionId");
-		if (session.getAttribute(sessionId) == null) {
+		if (sessionId == null) {
 			return null;
 		}
 		User user = service.selectByPrimaryKey(userId);
