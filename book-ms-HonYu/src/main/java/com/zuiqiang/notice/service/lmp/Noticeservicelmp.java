@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zuiqiang.notice.dao.NoticeMapper;
 import com.zuiqiang.notice.domain.Notice;
@@ -68,25 +69,34 @@ public class Noticeservicelmp implements Noticeservice {
 		return null;
 	}
 
-	@Override
-	public Notice findNoticeAll(String noticeContent) {
-		// TODO Auto-generated method stub
-		return noticemapper.findNoticeAll(noticeContent);
-	}
+//	@Override
+//	public String findNoticeAll(String noticeContent) {
+//		// TODO Auto-generated method stub
+//		List<Notice> list = noticemapper.findNoticeAll(noticeContent);
+//		String jsonliString = JSON.toJSONString(list);
+//		String jsonreturnString = "{\"data\":" + jsonliString + "}";
+//		if (list.size() != 0) {
+//			return jsonreturnString;
+//		}
+//		return null;
+//	}
 
 	@Override
 	public String findNoticeByLike(String noticeContent, Integer page, Integer rows) {
-		Notice anotice = noticemapper.findNoticeAll(noticeContent);
-		List<Notice> alist = noticemapper.getHistoryBynoticeId(anotice.getNoticeId());
-		PageInfo info = new PageInfo<>(alist);
+
+		// http://localhost:8081/admin/notice/findNoticeByLike?noticeContent=ca&page=2&rows=1
+
+		PageHelper.startPage(page, rows);
+		List<Notice> list = noticemapper.findNoticeByLike(noticeContent);
+		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
-		String jsonlist = JSON.toJSONString(alist);
-		String json = "{\"noticeContent\":" + anotice.getNoticeContent() + ",\"total\":" + total + ",\"data\":"
-				+ jsonlist + "}";
-		if (alist.size() != 0) {
+		String jsonlist = JSON.toJSONString(list);
+		String json = "{\"total\":" + total + ",\"data\":" + jsonlist + "}";
+		if (list.size() != 0) {
 			return json;
 		}
-		return "??????";
+		return null;
+
 	}
 
 }
