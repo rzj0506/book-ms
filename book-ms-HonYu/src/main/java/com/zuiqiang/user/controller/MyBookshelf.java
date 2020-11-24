@@ -32,7 +32,8 @@ public class MyBookshelf extends BaseController {
     @ResponseBody
     public List<Book> BookDisplay( ){
 
-       //Integer userId= loginUser.getUserId();
+//       Integer userId= 1;
+    	
         List<Book> books= myBookshelfService.listBorrowBooks(userId);
         return books;
     }
