@@ -206,7 +206,7 @@ public class NoticeController {
 	 * @throws IOException
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/findNoticeByLike", method = RequestMethod.POST)
+	@RequestMapping(value = "/findNoticeByLike", method = RequestMethod.GET)
 	public String findNoticeByLike(String noticeContent, Integer page, Integer rows) {
 		return noticeservice.findNoticeByLike(noticeContent, page, rows);
 

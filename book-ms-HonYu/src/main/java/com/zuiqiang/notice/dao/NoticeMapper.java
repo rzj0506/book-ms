@@ -28,18 +28,19 @@ public interface NoticeMapper {
 			@Result(column = "user_id", property = "userId"), })
 	List<Notice> showNoticesAll();
 
-	@Select("select * from notice where notice_content like CONCAT('%',#{noticeContent},'%') limit 0,1") // 公告的模糊查询
+	@Select("select * from notice where notice_content like CONCAT('%',#{noticeContent},'%')") // 公告的模糊查询
 	@Results(value = { @Result(column = "notice_id", property = "noticeId"),
 			@Result(column = "notice_content", property = "noticeContent"),
 			@Result(column = "notice_createtime", property = "noticeCreatetime"),
 			@Result(column = "user_id", property = "userId"), })
-	Notice findNoticeAll(String noticeContent);
+	List<Notice> findNoticeByLike(String noticeContent);
 
-	@Select("select * from notice where notice_id =#{noticeId} limit 0,1")
-	@Results(value = { @Result(column = "notice_id", property = "noticeId"),
-			@Result(column = "notice_content", property = "noticeContent"),
-			@Result(column = "notice_createtime", property = "noticeCreatetime"),
-			@Result(column = "user_id", property = "userId"), })
-	List<Notice> getHistoryBynoticeId(Integer noticeId);
+//	@Select("select * from notice where notice_id in #{noticeId} ")
+//	@Results(value = { @Result(column = "notice_id", property = "noticeId"),
+//			@Result(column = "notice_content", property = "noticeContent"),
+//			@Result(column = "notice_createtime", property = "noticeCreatetime"),
+//			@Result(column = "user_id", property = "userId"), })
+//
+//	List<Notice> getHistoryBynoticeId(Object noticeId);
 
 }
