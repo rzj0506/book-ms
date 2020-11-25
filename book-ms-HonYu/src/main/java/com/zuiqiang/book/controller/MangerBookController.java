@@ -94,7 +94,7 @@ public class MangerBookController {
 		}
 		try {
 			file.transferTo(new File(storePath + File.separator + fileName));
-			book.setBookImg(fileName);// ���ļ�д��Ŀ���ļ���ַ
+			book.setBookImg(storePath+"/"+fileName);// ���ļ�д��Ŀ���ļ���ַ
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelMap.put("back", "error");
@@ -127,9 +127,9 @@ public class MangerBookController {
 	public String managerDeleteBook(Book book) {
 		book = ManagerMapperservice.selectByPrimaryKey(book.getBookId());
 		String resultInfo=null;
-		File file = new File(storePath+"/"+book.getBookImg());
+		File file = new File(book.getBookImg());
 		file.delete();
-		System.out.println(storePath+"/"+book.getBookImg());
+		System.out.println(book.getBookImg());
 		System.out.println(file.getName());
 		if (file.exists()) {
   			
