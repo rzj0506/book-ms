@@ -339,10 +339,10 @@ public interface ManagerMapper {
 			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	List<Book> selectMyBook(User user);
 
-	@Select("select * from book where book_id=#{bookId}")
+	@Select("select *  from book where book_id=#{bookId}")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
-			@Result(column = "book_author", property = "bookAuthor"),
+			 @Result(column = "book_author", property = "bookAuthor"),
 			@Result(column = "book_pub", property = "bookPub"), @Result(column = "book_num", property = "bookNum"),
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),

@@ -128,7 +128,7 @@ public class MangerBookHistoryController {
 	@RequestMapping(value = "/SelectHistoryAll",method = RequestMethod.POST)
 	public String findHistoryAll(Book book,Integer page, Integer rows) {
 		PageHelper.startPage(page,rows);
-		List<Book> list=ManagerMapperservice.getHistoryAll(book);
+		 List<Book> list=ManagerMapperservice.getHistoryAll(book);
 		PageInfo info = new PageInfo<>(list);
 		long total = info.getTotal();
 		String jsonlist = JSON.toJSONString(list);

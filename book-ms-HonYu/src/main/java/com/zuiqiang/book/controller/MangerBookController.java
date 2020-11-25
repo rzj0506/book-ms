@@ -137,7 +137,8 @@ public class MangerBookController {
 				
 				resultInfo = "1-删除成功";
 			}else {
-				resultInfo = "0-删除失败";
+				
+				resultInfo = "0-删除失败1";
 			}
 		}else {
 			resultInfo = "文件不存在！";
