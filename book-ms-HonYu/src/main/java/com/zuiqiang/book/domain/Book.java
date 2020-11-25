@@ -1,6 +1,7 @@
 package com.zuiqiang.book.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -27,9 +28,16 @@ public class Book {
     @JSONField(format = "yyyy-MM-dd")
     private Date returnDate; 
     private Integer validityDate;
-  
-    
-    
+    private List<BorrowHistory> borrowHistory;
+
+    public List<BorrowHistory> getBorrowHistory() {
+        return borrowHistory;
+    }
+
+    public void setBorrowHistory(List<BorrowHistory> borrowHistory) {
+        this.borrowHistory = borrowHistory;
+    }
+
     public Date getBorrowDate() {
 		return borrowDate;
 	}
@@ -126,14 +134,22 @@ public class Book {
         this.bookLeft = bookLeft;
     }
 
-	@Override
-	public String toString() {
-		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", bookPub="
-				+ bookPub + ", bookNum=" + bookNum + ", bookSort=" + bookSort + ", bookRecord=" + bookRecord
-				+ ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + ", borrowDate=" + borrowDate + ", returnDate="
-				+ returnDate + ", validityDate=" + validityDate + "]";
-	}
-
-
-    
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", bookAuthor='" + bookAuthor + '\'' +
+                ", bookPub='" + bookPub + '\'' +
+                ", bookNum=" + bookNum +
+                ", bookSort='" + bookSort + '\'' +
+                ", bookRecord=" + bookRecord +
+                ", bookLeft=" + bookLeft +
+                ", isreturn=" + isreturn +
+                ", borrowDate=" + borrowDate +
+                ", returnDate=" + returnDate +
+                ", validityDate=" + validityDate +
+                ", borrowHistory=" + borrowHistory +
+                '}';
+    }
 }

@@ -8,13 +8,30 @@
         <result column="book_pub" property="bookPub"/>
         <result column="book_sort" property="bookSort"/>
         <result column="book_num" property="bookNum"/>
+
+       <!-- <collection property="borrowHistory" ofType="com.zuiqiang.book.domain.BorrowHistory">
+
+            <result column="history_id" property="historyId"/>
+            <result column="borrow_date" property="borrowDate"/>
+            <result column="validity_date" property="validityDate"/>
+        </collection>-->
+
     </resultMap>
-    <resultMap id="BaseResultMap1" type="com.zuiqiang.book.domain.BorrowHistory">
-        <id column="user_id" property="userId"/>
-        <result column="book_id" property="bookId"/>
+    <resultMap id="Map" type="java.util.Map">
+        <id column="book_id" property="bookId"/>
+        <result column="book_name" property="bookName"/>
+        <result column="book_author" property="bookAuthor"/>
+        <result column="book_pub" property="bookPub"/>
+        <result column="book_sort" property="bookSort"/>
+        <result column="book_num" property="bookNum"/>
+        <result column="history_id" property="historyId"/>
+        <result column="borrow_date" property="borrowDate"/>
+        <result column="validity_date" property="validityDate"/>
+
     </resultMap>
-    <select id="listBorrowBooks" resultMap="BaseResultMap">
-        select book_name , book_author, book_pub, book_sort from book bk,borrow_history bh
+
+    <select id="listBorrowBooks" resultMap="Map">
+        select bk.book_name , bk.book_author, bk.book_pub, bk.book_sort ,bh.history_id ,borrow_date ,validity_date from book bk,borrow_history bh
         where bk.book_id=bh.book_id and bh.user_id=#{userId} AND bh.isreturn=0
     </select>
     <select id="listNoBorrowBooks" resultMap="BaseResultMap">

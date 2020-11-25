@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,11 +31,11 @@ public class MyBookshelf extends BaseController {
      */
     @GetMapping("/listb")
     @ResponseBody
-    public List<Book> BookDisplay( ){
+    public List<Map<Object,Object>> BookDisplay( ){
 
        //Integer userId= loginUser.getUserId();
-        List<Book> books= myBookshelfService.listBorrowBooks(userId);
-        return books;
+        List<Map<Object,Object>> maps= myBookshelfService.listBorrowBooks(2);
+        return maps;
     }
 
     /**当用户借入书籍未满3本时

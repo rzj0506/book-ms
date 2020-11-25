@@ -1,16 +1,27 @@
 package com.zuiqiang.componnent;
 
+import com.zuiqiang.user.domain.User;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.handler.MessageContext;
 
+
+/**
+ * 这是一个拦截器类，用于拦截未登陆用户
+ */
 public class LoginHandleInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        return false;
+
+//        Integer userId=(Integer)request.getSession().getAttribute("userId");
+//        if(userId !=null){
+//            //response.sendRedirect("");
+//            return false;
+//
+//        }
+        return true;
     }
 
     @Override

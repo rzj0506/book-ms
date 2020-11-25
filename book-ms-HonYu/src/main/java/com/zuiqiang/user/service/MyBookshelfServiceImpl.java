@@ -1,6 +1,7 @@
 package com.zuiqiang.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,9 @@ public class MyBookshelfServiceImpl implements MyBookshelfService {
     @Autowired
     private MyBookshelfMapper myBookshelfMapper;
     @Override
-    public List<Book> listBorrowBooks(Integer userId) {
-       List<Book> books =myBookshelfMapper.listBorrowBooks(userId);
-        return books;
+    public List<Map<Object,Object>> listBorrowBooks(Integer userId) {
+        List<Map<Object,Object>> maps =myBookshelfMapper.listBorrowBooks(userId);
+        return maps;
     }
 
     @Override

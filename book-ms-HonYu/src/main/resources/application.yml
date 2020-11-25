@@ -13,3 +13,10 @@ pagehelper:
 mybatis:
     configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# redis相关配置
+
+#  redis:
+#    database: 0
+#    host: redis服务器IP
+#    port: 6379
+#    password: 密码

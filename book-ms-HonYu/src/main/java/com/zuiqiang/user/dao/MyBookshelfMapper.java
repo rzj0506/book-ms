@@ -5,10 +5,12 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface MyBookshelfMapper {
 
-    List<Book> listBorrowBooks(Integer userId);
+    List<Map<Object,Object>> listBorrowBooks(Integer userId);
 
 
 
