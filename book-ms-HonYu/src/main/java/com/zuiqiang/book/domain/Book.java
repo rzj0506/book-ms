@@ -28,8 +28,8 @@ public class Book {
 	private Date returnDate;
 	private Integer validityDate;
 
-	private String book_img;
-	private String book_introduce;
+	private String bookImg;
+	private String bookIntroduce;
 
 	private Integer userId;
 	private String userName;
@@ -58,20 +58,22 @@ public class Book {
 		this.historyId = historyId;
 	}
 
-	public String getBook_img() {
-		return book_img;
+	
+
+	public String getBookImg() {
+		return bookImg;
 	}
 
-	public void setBook_img(String book_img) {
-		this.book_img = book_img;
+	public void setBookImg(String bookImg) {
+		this.bookImg = bookImg;
 	}
 
-	public String getBook_introduce() {
-		return book_introduce;
+	public String getBookIntroduce() {
+		return bookIntroduce;
 	}
 
-	public void setBook_introduce(String book_introduce) {
-		this.book_introduce = book_introduce;
+	public void setBookIntroduce(String bookIntroduce) {
+		this.bookIntroduce = bookIntroduce;
 	}
 
 	public Date getBorrowDate() {
@@ -175,9 +177,10 @@ public class Book {
 		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", historyId="
 				+ historyId + ", bookPub=" + bookPub + ", bookNum=" + bookNum + ", bookSort=" + bookSort
 				+ ", bookRecord=" + bookRecord + ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + ", borrowDate="
-				+ borrowDate + ", returnDate=" + returnDate + ", validityDate=" + validityDate + ", book_img="
-				+ book_img + ", book_introduce=" + book_introduce + ", userId=" + userId + ", userName=" + userName
-				+ "]";
+				+ borrowDate + ", returnDate=" + returnDate + ", validityDate=" + validityDate + ", bookImg=" + bookImg
+				+ ", bookIntroduce=" + bookIntroduce + ", userId=" + userId + ", userName=" + userName + "]";
 	}
+
+	
 
 }

@@ -27,10 +27,11 @@
   <insert id="insert" parameterType="com.zuiqiang.book.domain.Book">
     insert into book (book_id, book_name, book_author, 
       book_pub, book_num, book_sort, 
-      book_record, book_left)
+      book_record, book_left,book_img,book_introduce)
     values (#{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, 
       #{bookPub,jdbcType=VARCHAR}, #{bookNum,jdbcType=INTEGER}, #{bookSort,jdbcType=VARCHAR}, 
-      #{bookRecord,jdbcType=TIMESTAMP}, #{bookLeft,jdbcType=INTEGER})
+      #{bookRecord,jdbcType=TIMESTAMP}, #{bookLeft,jdbcType=INTEGER},#{bookImg,jdbcType=INTEGER},
+      #{bookIntroduce,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zuiqiang.book.domain.Book">
     insert into book

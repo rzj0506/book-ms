@@ -6,13 +6,17 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
@@ -42,7 +46,7 @@ public class MangerBookController {
 	@Autowired
 	private ManagerMapper 	ManagerMapperservice;
 
-	
+	String storePath = "D://upload";
 	
 	/**
 	 * 查询某个用户现在有几本书
@@ -63,7 +67,7 @@ public class MangerBookController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/SaveBook",method = RequestMethod.POST)
-	public String addBook(Book book) {
+	public String addBook(Book book,MultipartFile file) {
 		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {
@@ -73,9 +77,36 @@ public class MangerBookController {
 			e.printStackTrace();
 		}
 		book.setBookRecord(date);
+		Map<String, String> modelMap = new HashMap<>();
+		if (!file.isEmpty()) {
+			
+	
 		
 		
+		Random r = new Random();
+		String fileName = file.getOriginalFilename();
+		String[] split = fileName.split(".jpg");
+		fileName = split[0] + r.nextInt(1000);
+		fileName = fileName + ".jpg";
+		File filePath = new File(storePath, fileName);
+		if (!filePath.getParentFile().exists()) {
+			filePath.getParentFile().mkdirs();// ���Ŀ¼�����ڣ��򴴽�Ŀ¼
+		}
+		try {
+			file.transferTo(new File(storePath + File.separator + fileName));
+			book.setBookImg(fileName);// ���ļ�д��Ŀ���ļ���ַ
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("back", "error");
+			String json = JSON.toJSONString(modelMap);
+			return json;
+		}
+		modelMap.put("back", "success");
 
+	} else {
+		modelMap.put("back", "error");
+	}
+		
 		
 		
 		
@@ -94,8 +125,25 @@ public class MangerBookController {
 	@ResponseBody
 	@RequestMapping(value = "/DeleteBook",method = RequestMethod.GET)
 	public String managerDeleteBook(Book book) {
-		book = BookMapperservice.selectByPrimaryKey(book.getBookId());
-		String json = JSON.toJSONString(book);
+		book = ManagerMapperservice.selectByPrimaryKey(book.getBookId());
+		String resultInfo=null;
+		File file = new File(storePath+"/"+book.getBookImg());
+		file.delete();
+		System.out.println(storePath+"/"+book.getBookImg());
+		System.out.println(file.getName());
+		if (file.exists()) {
+  			
+  			if (file.delete()) {
+				
+				resultInfo = "1-删除成功";
+			}else {
+				resultInfo = "0-删除失败";
+			}
+		}else {
+			resultInfo = "文件不存在！";
+		}	
+		
+			String json = JSON.toJSONString(book);
 		int in = BookMapperservice.deleteByPrimaryKey(book.getBookId());
 		if(in>0) {
 			return json;

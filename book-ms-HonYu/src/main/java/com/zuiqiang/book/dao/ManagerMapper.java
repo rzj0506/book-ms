@@ -21,17 +21,19 @@ public interface ManagerMapper {
 	@Select("select book_Left from book where book_id= #{bookId}")
 	int tofindBookLeftById(Integer bookId);
 
-	@Select("select book_id,book_name,book_author,book_pub,book_num,book_sort" + " ,book_record,book_left from book")
+	@Select("select book_img,book_id,book_introduce,book_name,book_author,book_pub,book_num,book_sort" + " ,book_record,book_left from book")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
 			@Result(column = "book_author", property = "bookAuthor"),
 			@Result(column = "book_pub", property = "bookPub"), @Result(column = "book_num", property = "bookNum"),
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),
 			@Result(column = "book_left", property = "bookLeft"), })
 	public List<Book> findAllBook() throws IOException;
 
-	@Select("select book_id,book_name,book_author,book_pub"
+	@Select("select book_img,book_introduce,book_id,book_name,book_author,book_pub"
 			+ ",book_num,book_sort,book_record,book_left  from book where book_name like CONCAT('%',#{bookName},'%')")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
@@ -40,6 +42,8 @@ public interface ManagerMapper {
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
 			@Result(column = "book_left", property = "bookLeft"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),
 
 	})
 	public List<Book> findBookByLike(String bookName);
@@ -51,7 +55,7 @@ public interface ManagerMapper {
 			+ "(select borrow_history.book_id from borrow_history where borrow_history.isreturn =0)")
 	int tofindBookLeftByName(String bookName);
 
-	@Select("select book_id,book_name,book_author,book_pub,"
+	@Select("select book_img,book_introduce,book_id,book_name,book_author,book_pub,"
 			+ "book_num,book_sort,book_record,book_left from book where book_name like CONCAT('%',#{keyWord},'%') limit 0,1")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
@@ -59,7 +63,9 @@ public interface ManagerMapper {
 			@Result(column = "book_pub", property = "bookPub"), @Result(column = "book_num", property = "bookNum"),
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
-			@Result(column = "book_left", property = "bookLeft"), })
+			@Result(column = "book_left", property = "bookLeft"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	Book findBookByLikelimit1(String bookname);
 
 	@Select("select * from book where (book_name=#{bookName} or #{bookName} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
@@ -72,7 +78,9 @@ public interface ManagerMapper {
 			@Result(column = "book_pub", property = "bookPub"), @Result(column = "book_num", property = "bookNum"),
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
-			@Result(column = "book_left", property = "bookLeft"), })
+			@Result(column = "book_left", property = "bookLeft"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	List<Book> selectBookByChiose(Book book);
 
 	@Select("select distinct book_author from book")
@@ -103,7 +111,9 @@ public interface ManagerMapper {
 			@Result(column = "book_pub", property = "bookPub"), @Result(column = "book_num", property = "bookNum"),
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
-			@Result(column = "book_left", property = "bookLeft"), })
+			@Result(column = "book_left", property = "bookLeft"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	List<Book> selectBookByChioseOrderRecord(Book book);
 
 	@Select("select * from book where (book_name=#{bookName} or #{bookName} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
@@ -116,10 +126,12 @@ public interface ManagerMapper {
 			@Result(column = "book_pub", property = "bookPub"), @Result(column = "book_num", property = "bookNum"),
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
-			@Result(column = "book_left", property = "bookLeft"), })
+			@Result(column = "book_left", property = "bookLeft"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	List<Book> selectBookByChioseDescRecord(Book book);
 
-	@Select("select * from (select history_id, book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
+	@Select("select * from (select book_img,book_introduce,history_id, book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
 			+ "book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n"
 			+ "join borrow_history on book.book_id=borrow_history.book_id and isreturn=0 where book.book_id is not null "
 			+ "and  (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
@@ -133,10 +145,12 @@ public interface ManagerMapper {
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
 			@Result(column = "book_left", property = "bookLeft"),
-			@Result(column = "isreturn", property = "isreturn"), })
+			@Result(column = "isreturn", property = "isreturn"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	List<Book> selectBookHistoryByChioseDescRecord(Book book);
 
-	@Select("select * from (select book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
+	@Select("select * from (select book_img,book_introduce,book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
 			+ "book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n"
 			+ "join borrow_history on book.book_id=borrow_history.book_id and isreturn=0 where book.book_id is not null "
 			+ "and  (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
@@ -150,10 +164,12 @@ public interface ManagerMapper {
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
 			@Result(column = "book_left", property = "bookLeft"),
-			@Result(column = "isreturn", property = "isreturn"), })
+			@Result(column = "isreturn", property = "isreturn"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	List<Book> selectBookHistoryByChioseOrderRecord(Book book);
 
-	@Select("select * from (select book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
+	@Select("select * from (select book_img,book_introduce,book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
 			+ "book.book_sort,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n"
 			+ "join borrow_history on book.book_id=borrow_history.book_id and isreturn=0  where book.book_id is not null and book.book_name like CONCAT('%',#{bookName},'%')"
 			+ "order by isreturn)as t group by t.book_id")
@@ -164,7 +180,9 @@ public interface ManagerMapper {
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "book_record", property = "bookRecord"),
 			@Result(column = "book_left", property = "bookLeft"),
-			@Result(column = "isreturn", property = "isreturn"), })
+			@Result(column = "isreturn", property = "isreturn"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	List<Book> selectHistoryByLike(Book book);
 
 	@Select("select sort_name from booksort")
@@ -173,7 +191,7 @@ public interface ManagerMapper {
 			@Result(column = "sort_name", property = "sortName"), })
 	List<BookSort> findAllBookSort();
 
-	@Select("select * from (select  book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
+	@Select("select * from (select  book_img,book_introduce,book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
 			+ " isreturn, borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n"
 			+ "join book on book.book_id=borrow_history.book_id   and isreturn=0 where book.book_id is not null"
 			+ " and user_id=#{userId} and book_name like CONCAT('%',#{bookName},'%') order by isreturn) as t ")
@@ -185,10 +203,12 @@ public interface ManagerMapper {
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "return_date", property = "returnDate"),
 			@Result(column = "borrow_date", property = "borrowDate"),
-			@Result(column = "validity_date", property = "validityDate"), })
+			@Result(column = "validity_date", property = "validityDate"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	public List<Book> getHistoryByIdLikeName(Integer userId, String bookName);
 
-	@Select("select * from (select user_name, user.user_id, book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
+	@Select("select * from (select book_img,book_introduce,user_name, user.user_id, book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
 			+ " validity_date, book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n"
 			+ "join borrow_history on book.book_id=borrow_history.book_id   and isreturn=0,user  where book.book_id is not null and "
 			+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
@@ -204,10 +224,12 @@ public interface ManagerMapper {
 			@Result(column = "return_date", property = "returnDate"),
 			@Result(column = "borrow_date", property = "borrowDate"),
 			@Result(column = "validity_date", property = "validityDate"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),
 			@Result(column = "user_id", property = "userId"), @Result(column = "user_name", property = "userName"), })
 	List<Book> getHistoryAll(Book book);
 
-	@Select("select * from (select user_name, user.user_id, book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
+	@Select("select * from (select book_img,book_introduce,user_name, user.user_id, book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
 			+ " validity_date,book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n"
 			+ "join borrow_history on book.book_id=borrow_history.book_id   and isreturn=0,user  where book.book_id is not null and "
 			+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
@@ -223,12 +245,14 @@ public interface ManagerMapper {
 			@Result(column = "return_date", property = "returnDate"),
 			@Result(column = "borrow_date", property = "borrowDate"),
 			@Result(column = "validity_date", property = "validityDate"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),
 			@Result(column = "user_id", property = "userId"), @Result(column = "user_name", property = "userName"), })
 	List<Book> getHistoryAllDesc(Book book);
 
-	@Select("select * from (select user_name, user.user_id, book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
+	@Select("select * from (select book_img,book_introduce,user_name, user.user_id, book.book_id, book.book_name,book.book_pub,book.book_author,\r\n"
 			+ " validity_date,book.book_sort,return_date,borrow_date,book.book_record,ifnull(isreturn,1) as isreturn from book LEFT OUTER \r\n"
-			+ "join borrow_history on book.book_id=borrow_history.book_id   and isreturn=0,user where book.book_id is not null and and user.user_id =borrow_history.user_id  and "
+			+ "join borrow_history on book.book_id=borrow_history.book_id   and isreturn=0,user where book.book_id is not null and user.user_id =borrow_history.user_id  and "
 			+ "  book_name like CONCAT('%',#{bookName},'%')order by isreturn) as t  group by t.book_id ")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
@@ -239,6 +263,8 @@ public interface ManagerMapper {
 			@Result(column = "book_left", property = "bookLeft"), @Result(column = "isreturn", property = "isreturn"),
 			@Result(column = "return_date", property = "returnDate"),
 			@Result(column = "borrow_date", property = "borrowDate"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),
 			@Result(column = "validity_date", property = "validityDate"),
 			@Result(column = "user_id", property = "userId"), @Result(column = "user_name", property = "userName"), })
 	List<Book> getHistoryAllByLike(Book book);
@@ -267,14 +293,15 @@ public interface ManagerMapper {
 			+ "values(#{userId},#{bookId},#{borrowDate},#{validityDate},#{isreturn})")
 	int inserta(BorrowHistory borrowHistory);
 
-	@Select("select  book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
+	@Select("select book_img,book_introduce, book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
 			+ "borrow_history.return_date,borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n"
 			+ "join book on book.book_id=borrow_history.book_id where book.book_id is not null"
 			+ " and user_id=#{userId}")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
 			@Result(column = "book_author", property = "bookAuthor"),
-
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),
 			@Result(column = "book_sort", property = "bookSort"),
 			@Result(column = "return_date", property = "returnDate"),
 			@Result(column = "borrow_date", property = "borrowDate"),
@@ -284,7 +311,7 @@ public interface ManagerMapper {
 	@Select("select count(*) from borrow_history where user_id = #{userId}")
 	int getUserBookNum(Integer userId);
 
-	@Select("select borrow_history.history_id, book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
+	@Select("select book_img,book_introduce,borrow_history.history_id, book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
 			+ "borrow_history.return_date,borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n"
 			+ "join book on book.book_id=borrow_history.book_id where book.book_id is not null and isreturn=0"
 			+ " and user_id=#{userId}")
@@ -298,7 +325,25 @@ public interface ManagerMapper {
 			@Result(column = "return_date", property = "returnDate"),
 			@Result(column = "borrow_date", property = "borrowDate"),
 			@Result(column = "validity_date", property = "validityDate"),
-			@Result(column = "history_id", property = "historyId"), })
+			@Result(column = "history_id", property = "historyId"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	List<Book> selectMyBook(User user);
+
+	@Select("select * from book where book_id=#{bookId}")
+	@Results(value = { @Result(column = "book_id", property = "bookId"),
+			@Result(column = "book_name", property = "bookName"),
+			@Result(column = "book_author", property = "bookAuthor"),
+			@Result(column = "book_pub", property = "bookPub"), @Result(column = "book_num", property = "bookNum"),
+			@Result(column = "book_sort", property = "bookSort"),
+			@Result(column = "book_record", property = "bookRecord"),
+			@Result(column = "book_left", property = "bookLeft"), @Result(column = "isreturn", property = "isreturn"),
+			@Result(column = "return_date", property = "returnDate"),
+			@Result(column = "borrow_date", property = "borrowDate"),
+			@Result(column = "validity_date", property = "validityDate"),
+			@Result(column = "history_id", property = "historyId"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
+	Book selectByPrimaryKey(Integer bookId);
 
 }
