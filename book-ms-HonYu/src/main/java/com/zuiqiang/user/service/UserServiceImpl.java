@@ -1,6 +1,5 @@
 package com.zuiqiang.user.service;
 
-import com.zuiqiang.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +68,12 @@ public class UserServiceImpl implements UserService {
 	public int updatePasswordByUserId(User record) {
 		// TODO Auto-generated method stub
 		return mapper.updatePasswordByUserId(record);
+	}
+
+	@Override
+	public User selectByEmail(String userEmail) {
+		// TODO Auto-generated method stub
+		return mapper.selectByEmail(userEmail);
 	}
 	
 	

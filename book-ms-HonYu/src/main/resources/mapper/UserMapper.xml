@@ -28,6 +28,13 @@
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
   
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    user_email
+    from user
+    where user_email = #{userEmail,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}

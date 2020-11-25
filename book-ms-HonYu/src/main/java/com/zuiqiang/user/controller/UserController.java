@@ -77,6 +77,44 @@ public class UserController {
 	}
 
 	/**
+	 * 判断userId是否已经存在
+	 * 
+	 * @param user
+	 * @return
+	 */
+
+	@RequestMapping(value = "/CheckuserId", method = RequestMethod.POST, produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public int selectById( Integer userId) {
+		
+		User user = service.selectById(userId);
+		if (user != null) {
+			return 1;
+		}
+		return 0;
+	}
+	
+	
+	/**
+	 * 判断userEmail是否已经存在
+	 * 
+	 * @param user
+	 * @return
+	 */
+
+	@RequestMapping(value = "/CheckuserEmail", method = RequestMethod.POST, produces = { "application/json;charset=utf-8" })
+	@ResponseBody
+	public int selectByEmail( String  userEmail) {
+		
+		User user = service.selectByEmail(userEmail);
+		if (user != null) {
+			return 1;
+		}
+		return 0;
+	}
+	
+	
+	/**
 	 * 根据Id查找用户
 	 * 
 	 * @param user
