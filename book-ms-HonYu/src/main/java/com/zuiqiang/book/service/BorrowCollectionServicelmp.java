@@ -1,18 +1,16 @@
 package com.zuiqiang.book.service;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zuiqiang.book.dao.BorrowCollectionMapper;
-import com.zuiqiang.book.service.BorrowCollectionService;
+
 @Service
-public class BorrowCollectionServicelmp  implements BorrowCollectionService{
+public class BorrowCollectionServicelmp implements BorrowCollectionService {
 
 	@Autowired
 	private BorrowCollectionMapper Borrowcollectionmapper;
-	
+
 	@Override
 	public int BorrowToday() {
 		// TODO Auto-generated method stub

@@ -19,9 +19,9 @@ public interface Noticeservice {
 
 	int deleteByPrimaryKey(Integer noticeId);// 刪除
 
-	String showNoticesAll();// 公告列表展示
+	String showNoticesAll(int page, int rows);// 公告列表展示
 
-	Notice findNoticeAll(String noticeContent);// 查询
+//	String findNoticeAll(String noticeContent);// 查询
 
 	String findNoticeByLike(String noticeContent, Integer page, Integer rows); // 公告的模糊查询
 

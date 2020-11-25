@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
+import com.alibaba.fastjson.JSON;
 import com.zuiqiang.notice.domain.Notice;
 import com.zuiqiang.notice.service.Noticeservice;
 
@@ -29,7 +30,7 @@ import com.zuiqiang.notice.service.Noticeservice;
  */
 
 @Controller
-@RequestMapping("/admin/notice")
+@RequestMapping("/admin/notice") // 公告的前缀地址字段
 public class NoticeController {
 	@Autowired
 	private Noticeservice noticeservice;
@@ -56,9 +57,16 @@ public class NoticeController {
 	 */
 	@PostMapping(value = { "/insertall" })
 	@ResponseBody
-	public int insertNotice(Notice notice) {
+	public String insertNotice(Notice notice) {
 
-		return noticeservice.insert(notice);
+		
+		int in = noticeservice.insert(notice);
+		if(in > 0) {
+			
+			String json = JSON.toJSONString(notice);
+			return json;
+		}
+		return null;
 	}
 
 	/**
@@ -177,19 +185,21 @@ public class NoticeController {
 	}
 
 	/**
-	 * 刪除
+	 * 刪除公告
 	 * 
 	 * @param noticeId
 	 * @return int
 	 */
 	@GetMapping(value = { "delete" })
 	@ResponseBody
-	public int deleteNotice(@RequestParam("noticeId") Integer noticeId) {
-		return noticeservice.deleteByPrimaryKey(noticeId);
+	public int deleteNotice(@RequestParam("noticeId") String noticeId) {
+		return noticeservice.deleteByPrimaryKey(Integer.parseInt(noticeId));
 	}
 
 	/**
 	 * 查询公告分页
+	 * 
+	 * 测试的url http://localhost:8081/admin/notice/noticeshow
 	 * 
 	 * @throws IOException
 	 */
@@ -197,16 +207,19 @@ public class NoticeController {
 	@RequestMapping(value = "/noticeshow", method = RequestMethod.GET)
 	@ResponseBody
 	public String noticeshow(Notice notice, Integer page, Integer rows) throws IOException {
-		return noticeservice.showNoticesAll();
+		return noticeservice.showNoticesAll(page, rows);
 	}
 
 	/**
 	 * 查询公告 之 模糊查询
 	 * 
+	 * 测试的url
+	 * http://localhost:8081/admin/notice/findNoticeByLike?noticeContent=ca&page=2&rows=1
+	 * 
 	 * @throws IOException
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/findNoticeByLike", method = RequestMethod.POST)
+	@RequestMapping(value = "/findNoticeByLike", method = RequestMethod.GET)
 	public String findNoticeByLike(String noticeContent, Integer page, Integer rows) {
 		return noticeservice.findNoticeByLike(noticeContent, page, rows);
 

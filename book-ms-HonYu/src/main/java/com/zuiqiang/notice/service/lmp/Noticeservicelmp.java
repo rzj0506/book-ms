@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zuiqiang.notice.dao.NoticeMapper;
 import com.zuiqiang.notice.domain.Notice;
@@ -55,11 +56,15 @@ public class Noticeservicelmp implements Noticeservice {
 	}
 
 	@Override
-	public String showNoticesAll() {
+	public String showNoticesAll(int page, int rows) { // 列出所有公告的内容
+		// 测试的url
+		// http://localhost:8081/admin/notice/noticeshow
+
 		// TODO Auto-generated method stub
-		List<Notice> noticeslist = noticemapper.showNoticesAll();
+		int num =noticemapper.GetNoticeNum();
+		List<Notice> noticeslist = noticemapper.showNoticesAll((page-1)*rows, rows);
 		PageInfo info = new PageInfo<>(noticeslist);
-		long total = info.getTotal();
+		long total = num;
 		String jsonlist = JSON.toJSONString(noticeslist);
 		String json = "{\"total\":" + total + ",\"data\":" + jsonlist + "}";
 		if (noticeslist.size() != 0) {
@@ -68,25 +73,36 @@ public class Noticeservicelmp implements Noticeservice {
 		return null;
 	}
 
-	@Override
-	public Notice findNoticeAll(String noticeContent) {
-		// TODO Auto-generated method stub
-		return noticemapper.findNoticeAll(noticeContent);
-	}
+//	@Override
+//	public String findNoticeAll(String noticeContent) {
+//		// TODO Auto-generated method stub
+//		List<Notice> list = noticemapper.findNoticeAll(noticeContent);
+//		String jsonliString = JSON.toJSONString(list);
+//		String jsonreturnString = "{\"data\":" + jsonliString + "}";
+//		if (list.size() != 0) {
+//			return jsonreturnString;
+//		}
+//		return null;
+//	}
 
-	@Override
+	@Override // 公告的模糊查询功能，分页展示
 	public String findNoticeByLike(String noticeContent, Integer page, Integer rows) {
-		Notice anotice = noticemapper.findNoticeAll(noticeContent);
-		List<Notice> alist = noticemapper.getHistoryBynoticeId(anotice.getNoticeId());
-		PageInfo info = new PageInfo<>(alist);
-		long total = info.getTotal();
-		String jsonlist = JSON.toJSONString(alist);
-		String json = "{\"noticeContent\":" + anotice.getNoticeContent() + ",\"total\":" + total + ",\"data\":"
-				+ jsonlist + "}";
-		if (alist.size() != 0) {
+
+		// 测试的url
+		// http://localhost:8081/admin/notice/findNoticeByLike?noticeContent=ca&page=2&rows=1
+
+//		PageHelper.startPage(page, rows);
+		int num =noticemapper.findNoticeByLikeTotal(noticeContent);
+		List<Notice> list = noticemapper.findNoticeByLike(noticeContent, (page - 1) * rows, rows);
+		PageInfo info = new PageInfo<>(list);
+		long total = num;
+		String jsonlist = JSON.toJSONString(list);
+		String json = "{\"total\":" + total + ",\"data\":" + jsonlist + "}";
+		if (list.size() != 0) {
 			return json;
 		}
-		return "??????";
+		return null;
+
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.zuiqiang.book.domain;
 
 import java.util.Date;
-import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -11,7 +10,7 @@ public class Book {
     private String bookName;
 
     private String bookAuthor;
-
+    private Integer historyId;
     private String bookPub;
 
     private Integer bookNum;
@@ -28,17 +27,36 @@ public class Book {
     @JSONField(format = "yyyy-MM-dd")
     private Date returnDate; 
     private Integer validityDate;
-    private List<BorrowHistory> borrowHistory;
+  
+    private String book_img;
+    private String book_introduce;
+    
+    
+    public Integer getHistoryId() {
+		return historyId;
+	}
 
-    public List<BorrowHistory> getBorrowHistory() {
-        return borrowHistory;
-    }
+	public void setHistoryId(Integer historyId) {
+		this.historyId = historyId;
+	}
 
-    public void setBorrowHistory(List<BorrowHistory> borrowHistory) {
-        this.borrowHistory = borrowHistory;
-    }
+	public String getBook_img() {
+		return book_img;
+	}
 
-    public Date getBorrowDate() {
+	public void setBook_img(String book_img) {
+		this.book_img = book_img;
+	}
+
+	public String getBook_introduce() {
+		return book_introduce;
+	}
+
+	public void setBook_introduce(String book_introduce) {
+		this.book_introduce = book_introduce;
+	}
+
+	public Date getBorrowDate() {
 		return borrowDate;
 	}
 
@@ -134,22 +152,19 @@ public class Book {
         this.bookLeft = bookLeft;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "bookId=" + bookId +
-                ", bookName='" + bookName + '\'' +
-                ", bookAuthor='" + bookAuthor + '\'' +
-                ", bookPub='" + bookPub + '\'' +
-                ", bookNum=" + bookNum +
-                ", bookSort='" + bookSort + '\'' +
-                ", bookRecord=" + bookRecord +
-                ", bookLeft=" + bookLeft +
-                ", isreturn=" + isreturn +
-                ", borrowDate=" + borrowDate +
-                ", returnDate=" + returnDate +
-                ", validityDate=" + validityDate +
-                ", borrowHistory=" + borrowHistory +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", historyId="
+				+ historyId + ", bookPub=" + bookPub + ", bookNum=" + bookNum + ", bookSort=" + bookSort
+				+ ", bookRecord=" + bookRecord + ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + ", borrowDate="
+				+ borrowDate + ", returnDate=" + returnDate + ", validityDate=" + validityDate + ", book_img="
+				+ book_img + ", book_introduce=" + book_introduce + "]";
+	}
+
+
+
+	
+
+
+    
 }

@@ -1,6 +1,8 @@
 package com.zuiqiang.book.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +23,7 @@ import com.zuiqiang.book.dao.BorrowHistoryMapper;
 import com.zuiqiang.book.dao.ManagerMapper;
 import com.zuiqiang.book.domain.Book;
 import com.zuiqiang.user.dao.UserMapper;
+import com.zuiqiang.user.domain.User;
 
 @Controller
 public class MangerBookController {
@@ -41,7 +44,19 @@ public class MangerBookController {
 
 	
 	
-	
+	/**
+	 * 查询某个用户现在有几本书
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/GetUserBookNum",method = RequestMethod.GET)
+	public String getUserBookNum(User user) {
+		int num = ManagerMapperservice.getUserBookNum(user.getUserId());
+		String json = JSON.toJSONString(num);
+		
+		
+			return json;
+		
+	}
 	
 	/**
 	 * 增加图书
@@ -49,8 +64,7 @@ public class MangerBookController {
 	@ResponseBody
 	@RequestMapping(value = "/SaveBook",method = RequestMethod.POST)
 	public String addBook(Book book) {
-		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
+		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {
 			date = df.parse(df.format(new Date()));
@@ -58,8 +72,13 @@ public class MangerBookController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		book.setBookRecord(date);
+		
+		
+
+		
+		
+		
 		int in = BookMapperservice.insert(book);
 		if(in > 0) {
 			
@@ -88,10 +107,37 @@ public class MangerBookController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/UpdateBook",method = RequestMethod.POST)
-	public String managerChangeSort(Book book) {
+	public String managerChangeSort(Integer bookId,String bookName,String bookAuthor,String bookPub,String bookSort,String bookRecord) {
+		
+		Date date=null;
+		Book book=new Book();
+		if(bookRecord!=null) {
+		DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			date = fmt.parse(bookRecord);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		if(bookId!=null)
+			book.setBookId(bookId);
+		if(bookName!=null)
+		book.setBookName(bookName);
+		if(bookAuthor!=null)
+		book.setBookAuthor(bookAuthor);
+		if(bookPub!=null)
+		book.setBookPub(bookPub);
+		if(bookSort!=null)
+		book.setBookSort(bookSort);
+		if(date!=null)
+		book.setBookRecord(date);
 		
 		String json = JSON.toJSONString(book);
 		int in = BookMapperservice.updateByPrimaryKeySelective(book);
+		
+		
 		if(in>0) {
 			return json;
 		}
@@ -298,7 +344,7 @@ public class MangerBookController {
 		return null;
 	}
 	/**
-	 * 筛选历史查询 按时间小排序
+	 * 筛选书本+isreturn查询 按时间小排序
 	 * @throws IOException 
 	 */
 	@ResponseBody
