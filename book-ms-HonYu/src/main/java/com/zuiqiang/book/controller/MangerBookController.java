@@ -155,7 +155,8 @@ public class MangerBookController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/UpdateBook",method = RequestMethod.POST)
-	public String managerChangeSort(Integer bookId,String bookName,String bookAuthor,String bookPub,String bookSort,String bookRecord) {
+	public String managerChangeSort(Integer bookId,String bookName,String bookAuthor,String bookPub,String bookSort,String bookRecord,
+			String bookImg,String bookIntroduce) {
 		
 		Date date=null;
 		Book book=new Book();
@@ -181,7 +182,10 @@ public class MangerBookController {
 		book.setBookSort(bookSort);
 		if(date!=null)
 		book.setBookRecord(date);
-		
+		if(bookImg!=null)
+		book.setBookImg(bookImg);
+		if(bookIntroduce!=null)
+			book.setBookIntroduce(bookIntroduce);
 		String json = JSON.toJSONString(book);
 		int in = BookMapperservice.updateByPrimaryKeySelective(book);
 		

@@ -112,6 +112,12 @@
       <if test="bookLeft != null">
         book_left = #{bookLeft,jdbcType=INTEGER},
       </if>
+      <if test="bookImg != null">
+        book_img = #{bookImg,jdbcType=INTEGER},
+      </if>
+      <if test="bookIntroduce != null">
+        book_introduce = #{bookIntroduce,jdbcType=INTEGER},
+      </if>
     </set>
     where book_id = #{bookId,jdbcType=INTEGER}
   </update>
@@ -124,6 +130,8 @@
       book_sort = #{bookSort,jdbcType=VARCHAR},
       book_record = #{bookRecord,jdbcType=TIMESTAMP},
       book_left = #{bookLeft,jdbcType=INTEGER}
+       book_img = #{bookImg,jdbcType=INTEGER}
+        book_introduce = #{bookIntroduce,jdbcType=INTEGER}
     where book_id = #{bookId,jdbcType=INTEGER}
   </update>
   <select id="selectBooksByConditions" resultMap="BaseResultMap">
