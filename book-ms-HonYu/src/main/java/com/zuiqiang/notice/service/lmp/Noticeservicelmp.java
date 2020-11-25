@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zuiqiang.notice.dao.NoticeMapper;
 import com.zuiqiang.notice.domain.Notice;
@@ -61,8 +60,8 @@ public class Noticeservicelmp implements Noticeservice {
 		// http://localhost:8081/admin/notice/noticeshow
 
 		// TODO Auto-generated method stub
-		int num =noticemapper.GetNoticeNum();
-		List<Notice> noticeslist = noticemapper.showNoticesAll((page-1)*rows, rows);
+		int num = noticemapper.GetNoticeNum();
+		List<Notice> noticeslist = noticemapper.showNoticesAll((page - 1) * rows, rows);
 		PageInfo info = new PageInfo<>(noticeslist);
 		long total = num;
 		String jsonlist = JSON.toJSONString(noticeslist);
@@ -92,7 +91,7 @@ public class Noticeservicelmp implements Noticeservice {
 		// http://localhost:8081/admin/notice/findNoticeByLike?noticeContent=ca&page=2&rows=1
 
 //		PageHelper.startPage(page, rows);
-		int num =noticemapper.findNoticeByLikeTotal(noticeContent);
+		int num = noticemapper.findNoticeByLikeTotal(noticeContent);
 		List<Notice> list = noticemapper.findNoticeByLike(noticeContent, (page - 1) * rows, rows);
 		PageInfo info = new PageInfo<>(list);
 		long total = num;

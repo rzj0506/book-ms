@@ -59,10 +59,9 @@ public class NoticeController {
 	@ResponseBody
 	public String insertNotice(Notice notice) {
 
-		
 		int in = noticeservice.insert(notice);
-		if(in > 0) {
-			
+		if (in > 0) {
+
 			String json = JSON.toJSONString(notice);
 			return json;
 		}

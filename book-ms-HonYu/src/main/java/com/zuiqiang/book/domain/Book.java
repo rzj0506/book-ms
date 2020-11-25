@@ -5,34 +5,52 @@ import java.util.Date;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class Book {
-    private Integer bookId;
+	private Integer bookId;
 
-    private String bookName;
+	private String bookName;
 
-    private String bookAuthor;
-    private Integer historyId;
-    private String bookPub;
+	private String bookAuthor;
+	private Integer historyId;
+	private String bookPub;
 
-    private Integer bookNum;
+	private Integer bookNum;
 
-    private String bookSort;
-    @JSONField(format = "yyyy-MM-dd")
-    private Date bookRecord;
+	private String bookSort;
+	@JSONField(format = "yyyy-MM-dd")
+	private Date bookRecord;
 
-    private Integer bookLeft;
+	private Integer bookLeft;
 
-    private Integer isreturn;
-    @JSONField(format = "yyyy-MM-dd")
-    private Date borrowDate;
-    @JSONField(format = "yyyy-MM-dd")
-    private Date returnDate; 
-    private Integer validityDate;
-  
-    private String book_img;
-    private String book_introduce;
-    
-    
-    public Integer getHistoryId() {
+	private Integer isreturn;
+	@JSONField(format = "yyyy-MM-dd")
+	private Date borrowDate;
+	@JSONField(format = "yyyy-MM-dd")
+	private Date returnDate;
+	private Integer validityDate;
+
+	private String book_img;
+	private String book_introduce;
+
+	private Integer userId;
+	private String userName;
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getHistoryId() {
 		return historyId;
 	}
 
@@ -89,68 +107,68 @@ public class Book {
 	}
 
 	public Integer getBookId() {
-        return bookId;
-    }
+		return bookId;
+	}
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
-    }
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
+	}
 
-    public String getBookName() {
-        return bookName;
-    }
+	public String getBookName() {
+		return bookName;
+	}
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
 
-    public String getBookAuthor() {
-        return bookAuthor;
-    }
+	public String getBookAuthor() {
+		return bookAuthor;
+	}
 
-    public void setBookAuthor(String bookAuthor) {
-        this.bookAuthor = bookAuthor;
-    }
+	public void setBookAuthor(String bookAuthor) {
+		this.bookAuthor = bookAuthor;
+	}
 
-    public String getBookPub() {
-        return bookPub;
-    }
+	public String getBookPub() {
+		return bookPub;
+	}
 
-    public void setBookPub(String bookPub) {
-        this.bookPub = bookPub;
-    }
+	public void setBookPub(String bookPub) {
+		this.bookPub = bookPub;
+	}
 
-    public Integer getBookNum() {
-        return bookNum;
-    }
+	public Integer getBookNum() {
+		return bookNum;
+	}
 
-    public void setBookNum(Integer bookNum) {
-        this.bookNum = bookNum;
-    }
+	public void setBookNum(Integer bookNum) {
+		this.bookNum = bookNum;
+	}
 
-    public String getBookSort() {
-        return bookSort;
-    }
+	public String getBookSort() {
+		return bookSort;
+	}
 
-    public void setBookSort(String bookSort) {
-        this.bookSort = bookSort;
-    }
+	public void setBookSort(String bookSort) {
+		this.bookSort = bookSort;
+	}
 
-    public Date getBookRecord() {
-        return bookRecord;
-    }
+	public Date getBookRecord() {
+		return bookRecord;
+	}
 
-    public void setBookRecord(Date bookRecord) {
-        this.bookRecord = bookRecord;
-    }
+	public void setBookRecord(Date bookRecord) {
+		this.bookRecord = bookRecord;
+	}
 
-    public Integer getBookLeft() {
-        return bookLeft;
-    }
+	public Integer getBookLeft() {
+		return bookLeft;
+	}
 
-    public void setBookLeft(Integer bookLeft) {
-        this.bookLeft = bookLeft;
-    }
+	public void setBookLeft(Integer bookLeft) {
+		this.bookLeft = bookLeft;
+	}
 
 	@Override
 	public String toString() {
@@ -158,13 +176,8 @@ public class Book {
 				+ historyId + ", bookPub=" + bookPub + ", bookNum=" + bookNum + ", bookSort=" + bookSort
 				+ ", bookRecord=" + bookRecord + ", bookLeft=" + bookLeft + ", isreturn=" + isreturn + ", borrowDate="
 				+ borrowDate + ", returnDate=" + returnDate + ", validityDate=" + validityDate + ", book_img="
-				+ book_img + ", book_introduce=" + book_introduce + "]";
+				+ book_img + ", book_introduce=" + book_introduce + ", userId=" + userId + ", userName=" + userName
+				+ "]";
 	}
 
-
-
-	
-
-
-    
 }
