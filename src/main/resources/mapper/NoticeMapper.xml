@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zuiqiang.notice.dao.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.zuiqiang.notice.domain.Notice">
+    <id column="notice_id" jdbcType="INTEGER" property="noticeId" />
+    <result column="notice_content" jdbcType="VARCHAR" property="noticeContent" />
+    <result column="notice_createtime" jdbcType="TIMESTAMP" property="noticeCreatetime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    notice_id, notice_content, notice_createtime, user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    ORDER BY notice_createtime DESC,notice_id DESC limit 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zuiqiang.notice.domain.Notice">
+    insert into notice (notice_id, notice_content, notice_createtime, 
+      user_id)
+    values (#{noticeId,jdbcType=INTEGER}, #{noticeContent,jdbcType=VARCHAR}, #{noticeCreatetime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zuiqiang.notice.domain.Notice">
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="noticeId != null">
+        notice_id,
+      </if>
+      <if test="noticeContent != null">
+        notice_content,
+      </if>
+      <if test="noticeCreatetime != null">
+        notice_createtime,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="noticeId != null">
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="noticeContent != null">
+        #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeCreatetime != null">
+        #{noticeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zuiqiang.notice.domain.Notice">
+    update notice
+    <set>
+      <if test="noticeContent != null">
+        notice_content = #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeCreatetime != null">
+        notice_createtime = #{noticeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zuiqiang.notice.domain.Notice">
+    update notice
+    set notice_content = #{noticeContent,jdbcType=VARCHAR},
+      notice_createtime = #{noticeCreatetime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER}
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+</mapper>

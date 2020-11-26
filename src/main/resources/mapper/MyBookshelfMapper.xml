@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zuiqiang.user.dao.MyBookshelfMapper">
+    <resultMap id="BaseResultMap" type="com.zuiqiang.book.domain.Book">
+        <id column="book_id" property="bookId"/>
+        <result column="book_name" property="bookName"/>
+        <result column="book_author" property="bookAuthor"/>
+        <result column="book_pub" property="bookPub"/>
+        <result column="book_sort" property="bookSort"/>
+        <result column="book_num" property="bookNum"/>
+    </resultMap>
+    <resultMap id="BaseResultMap1" type="com.zuiqiang.book.domain.BorrowHistory">
+        <id column="user_id" property="userId"/>
+        <result column="book_id" property="bookId"/>
+    </resultMap>
+    <select id="listBorrowBooks" resultMap="BaseResultMap">
+        select book_name , book_author, book_pub, book_sort from book bk,borrow_history bh
+        where bk.book_id=bh.book_id and bh.user_id=#{userId} AND bh.isreturn=0
+    </select>
+    <select id="listNoBorrowBooks" resultMap="BaseResultMap">
+        select book_name , book_author, book_pub, book_sort,book_num from book
+        where book_id not in (SELECT book_id from borrow_history where borrow_history.user_id=#{userId})
+    </select>
+    <select id="showBorrowCount" resultType="Integer">
+        select count(*) FROM book,borrow_history WHERE book.book_id=borrow_history.book_id and
+        borrow_history.isreturn=0;
+    </select>
+    <insert id="borrowBook" >
+        INSERT INTO borrow_history(user_id ,book_id,borrow_date,isreturn )
+VALUES (#{userId},#{bookId},#{borrowDate},0)
+    </insert>
+    <update id="returnBook">
+        UPDATE borrow_history SET isreturn=1 WHERE user_id=#{userId} and book_id=#{bookId}
+    </update>
+</mapper>

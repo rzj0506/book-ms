@@ -1,0 +1,18 @@
+spring:
+  #---- MySQL配置  ----#
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/libraryms?serverTimezone=Hongkong&useAffectedRows=true&characterEncoding=utf-8
+    username: root
+    password: root
+    initial-size: 5
+    min-idle: 5
+    max-active: 30
+    max-wait: 60000
+
+  thymeleaf:
+    cache: false
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+mvc:
+  static-path-pattern: /static/**

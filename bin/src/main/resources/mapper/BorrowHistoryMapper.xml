@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zuiqiang.book.dao.BorrowHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.zuiqiang.book.domain.BorrowHistory">
+    <id column="history_id" jdbcType="INTEGER" property="historyId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="borrow_date" jdbcType="TIMESTAMP" property="borrowDate" />
+    <result column="return_date" jdbcType="TIMESTAMP" property="returnDate" />
+    <result column="isreturn" jdbcType="INTEGER" property="isreturn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    history_id, user_id, book_id, borrow_date, return_date, isreturn
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from borrow_history
+    where history_id = #{historyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from borrow_history
+    where history_id = #{historyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zuiqiang.book.domain.BorrowHistory">
+    insert into borrow_history (history_id, user_id, book_id, 
+      borrow_date, return_date, isreturn
+      )
+    values (#{historyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, 
+      #{borrowDate,jdbcType=TIMESTAMP}, #{returnDate,jdbcType=TIMESTAMP}, #{isreturn,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zuiqiang.book.domain.BorrowHistory">
+    insert into borrow_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="historyId != null">
+        history_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="borrowDate != null">
+        borrow_date,
+      </if>
+      <if test="returnDate != null">
+        return_date,
+      </if>
+      <if test="isreturn != null">
+        isreturn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="historyId != null">
+        #{historyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null">
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="borrowDate != null">
+        #{borrowDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnDate != null">
+        #{returnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreturn != null">
+        #{isreturn,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zuiqiang.book.domain.BorrowHistory">
+    update borrow_history
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="borrowDate != null">
+        borrow_date = #{borrowDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnDate != null">
+        return_date = #{returnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreturn != null">
+        isreturn = #{isreturn,jdbcType=INTEGER},
+      </if>
+    </set>
+    where history_id = #{historyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zuiqiang.book.domain.BorrowHistory">
+    update borrow_history
+    set user_id = #{userId,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=INTEGER},
+      borrow_date = #{borrowDate,jdbcType=TIMESTAMP},
+      return_date = #{returnDate,jdbcType=TIMESTAMP},
+      isreturn = #{isreturn,jdbcType=INTEGER}
+    where history_id = #{historyId,jdbcType=INTEGER}
+  </update>
+</mapper>
