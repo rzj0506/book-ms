@@ -105,7 +105,7 @@ public class MangerBookController {
 		String fileName =null;
 		Map<String, String> modelMap = new HashMap<>();
 		if (!file.isEmpty()) {
-			System.out.println(storePath+ "//Pic//"  );
+			System.out.println(storePath+ "/Pic/"  );
 		Random r = new Random();
 		fileName = file.getOriginalFilename();
 		String[] split = fileName.split(".jpg");
@@ -129,7 +129,7 @@ public class MangerBookController {
 		modelMap.put("back", "error");
 	}
 		 book=ManagerMapperservice.getBookByPrimaryKeySelective();
-		book.setBookImg("//Pic//"+fileName);
+		book.setBookImg("/Pic/"+fileName);
 		int in= BookMapperservice.updateByPrimaryKeySelective(book);
 		if(in > 0) {
 			
@@ -148,9 +148,9 @@ public class MangerBookController {
 		book = ManagerMapperservice.selectByPrimaryKey(book.getBookId());
 		
 		
-		System.out.println(storePath+ "//Pic//" );
+		System.out.println(storePath+ "/Pic/" );
 		String resultInfo=null;
-		File file = new File(storePath+"//Pic//"+book.getBookImg());
+		File file = new File(storePath+book.getBookImg());
 		file.delete();
 		System.out.println(book.getBookImg());
 		System.out.println(file.getName());
