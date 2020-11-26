@@ -54,7 +54,7 @@ public class MangerBookController {
 //	String storePath = "C:\\Users\\Administrator\\git\\20.11.25.1\\book-ms2\\book-ms-HonYu\\src\\main\\resources\\static\\Pic";
 	String storePath1 = "resources\\static\\Pic";
 	
-	String  storePath =System.getProperty("user.dir")+"//src//main//resources//static//Pic";
+	String  storePath =System.getProperty("user.dir")+"//src//main//resources//static";
 	/**
 	 * 查询某个用户现在有几本书
 	 */
@@ -105,7 +105,7 @@ public class MangerBookController {
 		String fileName =null;
 		Map<String, String> modelMap = new HashMap<>();
 		if (!file.isEmpty()) {
-			System.out.println(storePath+ "/"  );
+			System.out.println(storePath+ "//Pic//"  );
 		Random r = new Random();
 		fileName = file.getOriginalFilename();
 		String[] split = fileName.split(".jpg");
@@ -129,7 +129,7 @@ public class MangerBookController {
 		modelMap.put("back", "error");
 	}
 		 book=ManagerMapperservice.getBookByPrimaryKeySelective();
-		book.setBookImg(fileName);
+		book.setBookImg("//Pic//"+fileName);
 		int in= BookMapperservice.updateByPrimaryKeySelective(book);
 		if(in > 0) {
 			
@@ -148,9 +148,9 @@ public class MangerBookController {
 		book = ManagerMapperservice.selectByPrimaryKey(book.getBookId());
 		
 		
-		System.out.println(storePath+ "/"  );
+		System.out.println(storePath+ "//Pic//" );
 		String resultInfo=null;
-		File file = new File(storePath+"/"+book.getBookImg());
+		File file = new File(storePath+"//Pic//"+book.getBookImg());
 		file.delete();
 		System.out.println(book.getBookImg());
 		System.out.println(file.getName());
@@ -295,7 +295,7 @@ public class MangerBookController {
 	@RequestMapping(value = "/SearchBookByLike",method = RequestMethod.POST)
 	public String searchBookByLike(String bookName,Integer page, Integer rows) throws IOException {
 		PageHelper.startPage(page,rows);
-		List<Book> list = ManagerMapperservice.findBookByLike(bookName);
+		List<Book> list = ManagerMapperservice.findBookByLike(bookName.replace(" ",""));
 	
 		PageInfo info = new PageInfo<>(list);
 
