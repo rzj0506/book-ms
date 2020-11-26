@@ -13,6 +13,7 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +30,7 @@ import com.zuiqiang.book.domain.Book;
 import com.zuiqiang.user.dao.UserMapper;
 import com.zuiqiang.user.domain.User;
 
+@CrossOrigin({"http://localhost:8081","null"})
 @Controller
 public class MangerBookController {
 	@Autowired
@@ -46,7 +48,7 @@ public class MangerBookController {
 	@Autowired
 	private ManagerMapper 	ManagerMapperservice;
 
-	String storePath = "D://upload";
+	String storePath = "C:\\Users\\Administrator\\git\\20.11.25.1\\book-ms2\\book-ms-HonYu\\src\\main\\resources\\static\\Pic";
 	
 	/**
 	 * 查询某个用户现在有几本书
@@ -94,7 +96,7 @@ public class MangerBookController {
 		}
 		try {
 			file.transferTo(new File(storePath + File.separator + fileName));
-			book.setBookImg(storePath+"/"+fileName);// ���ļ�д��Ŀ���ļ���ַ
+			book.setBookImg("/Pic/"+fileName);// ���ļ�д��Ŀ���ļ���ַ
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelMap.put("back", "error");

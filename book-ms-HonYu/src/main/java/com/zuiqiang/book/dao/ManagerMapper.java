@@ -208,14 +208,14 @@ public interface ManagerMapper {
 			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	public List<Book> getHistoryByIdLikeName(Integer userId, String bookName);
 
-	@Select("select book_img,book_introduce,user_name, user.user_id, book.book_id, book.book_name,\r\n" + 
+	@Select("select history_id, book_img,book_introduce,user_name, user.user_id, book.book_id, book.book_name,\r\n" + 
 			"book.book_pub,book.book_author, validity_date,book.book_sort,return_date,\r\n" + 
 			"borrow_date,book.book_record, isreturn from book,borrow_history,user where \r\n" + 
 			"book.book_id=borrow_history.book_id\r\n" + 
 			" and user.user_id =borrow_history.user_id and "
 			+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
 			+ "and (book_sort=#{bookSort} or #{bookSort} is  null) and user.user_id =borrow_history.user_id "
-			+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) order by borrow_date ")
+			+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) group by history_id order by borrow_date ")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
 			@Result(column = "book_author", property = "bookAuthor"),
@@ -231,14 +231,14 @@ public interface ManagerMapper {
 			@Result(column = "user_id", property = "userId"), @Result(column = "user_name", property = "userName"), })
 	List<Book> getHistoryAll(Book book);
 
-	@Select("select book_img,book_introduce,user_name, user.user_id, book.book_id, book.book_name,\r\n" + 
+	@Select("select  history_id,book_img,book_introduce,user_name, user.user_id, book.book_id, book.book_name,\r\n" + 
 			"book.book_pub,book.book_author, validity_date,book.book_sort,return_date,\r\n" + 
 			"borrow_date,book.book_record, isreturn from book,borrow_history,user where \r\n" + 
 			"book.book_id=borrow_history.book_id\r\n" + 
 			" and user.user_id =borrow_history.user_id and "
 			+ " (book_pub=#{bookPub} or #{bookPub} is null) and (book_author=#{bookAuthor} or #{bookAuthor} is null)"
 			+ "and (book_sort=#{bookSort} or #{bookSort} is  null) and user.user_id =borrow_history.user_id "
-			+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null) order by borrow_date desc")
+			+ "and (ifnull(isreturn,1)=#{isreturn} or #{isreturn} is  null)group by history_id order by borrow_date desc")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
 			@Result(column = "book_author", property = "bookAuthor"),
