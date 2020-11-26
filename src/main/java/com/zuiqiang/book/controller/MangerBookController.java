@@ -14,7 +14,6 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,6 +53,8 @@ public class MangerBookController {
 	
 //	String storePath = "C:\\Users\\Administrator\\git\\20.11.25.1\\book-ms2\\book-ms-HonYu\\src\\main\\resources\\static\\Pic";
 	String storePath1 = "resources\\static\\Pic";
+	
+	String  storePath =System.getProperty("user.dir")+"//src//main//resources//static//Pic";
 	/**
 	 * 查询某个用户现在有几本书
 	 */
@@ -68,19 +69,15 @@ public class MangerBookController {
 		
 	}
 	
+
+	
 	/**
 	 * 增加图书
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/SaveBook",method = RequestMethod.POST)
-	public String addBook(Book book,MultipartFile file) {
-		String storePath=null;
-		try {
-		storePath =ResourceUtils.getURL("classpath:static").getPath();
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	public String addBook(Book book) throws FileNotFoundException {
+	
 		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {
@@ -89,23 +86,37 @@ public class MangerBookController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		book.setBookRecord(date);
+		book.setBookRecord(date);	
+		int in = BookMapperservice.insert(book);
+		if(in > 0) {
+			
+			String json = JSON.toJSONString(book);
+			return json;
+		}
+		return null;
+	}
+	/**
+	 * 上传图片
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/UploadFile",method = RequestMethod.POST)
+	public String uploadfile(MultipartFile file) throws FileNotFoundException {
+		Book book =null;
+		String fileName =null;
 		Map<String, String> modelMap = new HashMap<>();
 		if (!file.isEmpty()) {
 			System.out.println(storePath+ "/"  );
 		Random r = new Random();
-		String fileName = file.getOriginalFilename();
+		fileName = file.getOriginalFilename();
 		String[] split = fileName.split(".jpg");
 		fileName = split[0] + r.nextInt(1000);
 		fileName = fileName + ".jpg";
 		File filePath = new File(storePath, fileName);
 		if (!filePath.getParentFile().exists()) {
-			filePath.getParentFile().mkdirs();// ���Ŀ¼�����ڣ��򴴽�Ŀ¼
+			filePath.getParentFile().mkdirs();
 		}
 		try {
 			file.transferTo(new File(storePath + "/" + fileName));
-			
-			book.setBookImg(fileName);// ���ļ�д��Ŀ���ļ���ַ
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelMap.put("back", "error");
@@ -117,19 +128,17 @@ public class MangerBookController {
 	} else {
 		modelMap.put("back", "error");
 	}
-		
-		
-		
-		
-		int in = BookMapperservice.insert(book);
+		 book=ManagerMapperservice.getBookByPrimaryKeySelective();
+		book.setBookImg(fileName);
+		int in= BookMapperservice.updateByPrimaryKeySelective(book);
 		if(in > 0) {
 			
-			String json = JSON.toJSONString(book);
+			String json = JSON.toJSONString(in);
 			return json;
 		}
 		return null;
+		
 	}
-	
 	/**
 	 * 删除一个图书
 	 */
@@ -137,13 +146,7 @@ public class MangerBookController {
 	@RequestMapping(value = "/DeleteBook",method = RequestMethod.GET)
 	public String managerDeleteBook(Book book) {
 		book = ManagerMapperservice.selectByPrimaryKey(book.getBookId());
-		String storePath=null;
-		try {
-		storePath =ResourceUtils.getURL("classpath:static").getPath();
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 		
 		System.out.println(storePath+ "/"  );
 		String resultInfo=null;

@@ -1,10 +1,11 @@
 package com.zuiqiang.book.dao;
 
-import com.zuiqiang.book.domain.Book;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.zuiqiang.book.domain.Book;
 
 @Repository
 public interface BookMapper {
@@ -27,4 +28,6 @@ public interface BookMapper {
     List<Book> selectBooksByConditions1(@Param("bookSort") String bookSort,@Param("bookPub") String bookPub,@Param("status") Integer status);
 
     List<Book> getBookByInput(String keyword);
+
+	
 }

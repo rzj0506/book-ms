@@ -355,4 +355,24 @@ public interface ManagerMapper {
 			@Result(column = "book_introduce", property = "bookIntroduce"),})
 	Book selectByPrimaryKey(Integer bookId);
 
+	
+	
+	@Select("select *  from book order by book_id desc limit 0,1")
+	@Results(value = { @Result(column = "book_id", property = "bookId"),
+			@Result(column = "book_name", property = "bookName"),
+			 @Result(column = "book_author", property = "bookAuthor"),
+			@Result(column = "book_pub", property = "bookPub"), @Result(column = "book_num", property = "bookNum"),
+			@Result(column = "book_sort", property = "bookSort"),
+			@Result(column = "book_record", property = "bookRecord"),
+			@Result(column = "book_left", property = "bookLeft"), @Result(column = "isreturn", property = "isreturn"),
+			@Result(column = "return_date", property = "returnDate"),
+			@Result(column = "borrow_date", property = "borrowDate"),
+			@Result(column = "validity_date", property = "validityDate"),
+			@Result(column = "history_id", property = "historyId"),
+			@Result(column = "book_img", property = "bookImg"),
+			@Result(column = "book_introduce", property = "bookIntroduce"),})
+	Book getBookByPrimaryKeySelective();
+
+	
+
 }
