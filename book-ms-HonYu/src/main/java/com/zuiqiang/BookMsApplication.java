@@ -12,6 +12,7 @@ import org.springframework.web.filter.CorsFilter;
 @SpringBootApplication
 public class BookMsApplication {
 
+	public static String storePath = "C:\\Users\\Administrator\\git\\20.11.25.1\\book-ms2\\book-ms-HonYu\\src\\main\\resources\\static\\Pic";
 	public static void main(String[] args) {
 		SpringApplication.run(BookMsApplication.class, args);
 	}

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zuiqiang.BookMsApplication;
 import com.zuiqiang.book.dao.BookMapper;
 import com.zuiqiang.book.dao.BookSortMapper;
 import com.zuiqiang.book.dao.BorrowHistoryMapper;
@@ -48,8 +49,7 @@ public class MangerBookController {
 	@Autowired
 	private ManagerMapper 	ManagerMapperservice;
 
-	String storePath = "C:\\Users\\Administrator\\git\\20.11.25.1\\book-ms2\\book-ms-HonYu\\src\\main\\resources\\static\\Pic";
-	
+	String storePath = BookMsApplication.storePath;
 	/**
 	 * 查询某个用户现在有几本书
 	 */
@@ -96,7 +96,7 @@ public class MangerBookController {
 		}
 		try {
 			file.transferTo(new File(storePath + File.separator + fileName));
-			book.setBookImg("/Pic/"+fileName);// ���ļ�д��Ŀ���ļ���ַ
+			book.setBookImg("Pic/"+fileName);// ���ļ�д��Ŀ���ļ���ַ
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelMap.put("back", "error");
