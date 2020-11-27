@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zuiqiang.BookMsApplication;
 import com.zuiqiang.book.dao.BookMapper;
 import com.zuiqiang.book.dao.BookSortMapper;
 import com.zuiqiang.book.dao.BorrowHistoryMapper;
@@ -31,6 +33,7 @@ import com.zuiqiang.book.domain.Book;
 import com.zuiqiang.user.dao.UserMapper;
 import com.zuiqiang.user.domain.User;
 
+@Configuration
 @CrossOrigin({"http://localhost:8081","null"})
 @Controller
 public class MangerBookController {
@@ -50,11 +53,11 @@ public class MangerBookController {
 	private ManagerMapper 	ManagerMapperservice;
 
 	
-	
+	//System.getProperty("user.dir")+"//src//main//resources//static";
 //	String storePath = "C:\\Users\\Administrator\\git\\20.11.25.1\\book-ms2\\book-ms-HonYu\\src\\main\\resources\\static\\Pic";
 	String storePath1 = "resources\\static\\Pic";
 	
-	String  storePath =System.getProperty("user.dir")+"//src//main//resources//static";
+	String  storePath =BookMsApplication.pathAll;
 	/**
 	 * 查询某个用户现在有几本书
 	 */
@@ -116,7 +119,7 @@ public class MangerBookController {
 			filePath.getParentFile().mkdirs();
 		}
 		try {
-			file.transferTo(new File(storePath + "/" + fileName));
+			file.transferTo(new File(storePath + "/Pic/"  + fileName));
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelMap.put("back", "error");

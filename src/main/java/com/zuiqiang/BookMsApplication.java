@@ -11,9 +11,10 @@ import org.springframework.web.filter.CorsFilter;
 @MapperScan(basePackages = "com.zuiqiang.*.dao")
 @SpringBootApplication
 public class BookMsApplication {
-
+	public static String pathAll=System.getProperty("user.dir")+"//src//main//resources//static";
+	//public static String pathAll="C:\\pache-tomcat-8.0.8\\apache-tomcat-8.0.8\\webapps\\library";
 	public static void main(String[] args) {
-		System.out.println("内容");
+		System.out.println("C:\\\\apache-tomcat-8.0.8\\\\apache-tomcat-8.0.8\\\\webapps\\\\library");
 		SpringApplication.run(BookMsApplication.class, args);
 	}
 

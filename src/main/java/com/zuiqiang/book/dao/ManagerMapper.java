@@ -191,10 +191,10 @@ public interface ManagerMapper {
 			@Result(column = "sort_name", property = "sortName"), })
 	List<BookSort> findAllBookSort();
 
-	@Select("select * from (select  book_img,book_introduce,book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
-			+ " isreturn, borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n"
-			+ "join book on book.book_id=borrow_history.book_id   and isreturn=0 where book.book_id is not null"
-			+ " and user_id=#{userId} and book_name like CONCAT('%',#{bookName},'%') order by isreturn) as t ")
+	@Select("select  book_img,book_introduce,book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
+			+ " isreturn, borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history  \r\n"
+			+ ", book  where book.book_id is not null and book.book_id= borrow_history.book_id"
+			+ " and user_id=#{userId} and book_name like CONCAT('%',#{bookName},'%')  ")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
 			@Result(column = "book_author", property = "bookAuthor"),
@@ -302,9 +302,9 @@ public interface ManagerMapper {
 			+ "values(#{userId},#{bookId},#{borrowDate},#{validityDate},#{isreturn})")
 	int inserta(BorrowHistory borrowHistory);
 
-	@Select("select book_img,book_introduce, book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
-			+ "borrow_history.return_date,borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history LEFT OUTER \r\n"
-			+ "join book on book.book_id=borrow_history.book_id where book.book_id is not null"
+	@Select("select  book_img,book_introduce,book.book_id, book.book_name,book.book_sort,book.book_author,\r\n"
+			+ " isreturn, borrow_history.borrow_date,borrow_history.return_date,validity_date from borrow_history  \r\n"
+			+ ", book  where book.book_id is not null and book.book_id= borrow_history.book_id"
 			+ " and user_id=#{userId}")
 	@Results(value = { @Result(column = "book_id", property = "bookId"),
 			@Result(column = "book_name", property = "bookName"),
